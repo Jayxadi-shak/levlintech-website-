@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Levlin Tech — AI Front Desk for Local Businesses</title>
+  <meta name="description" content="Levlin Tech is an AI-powered front desk that answers chats and calls, captures leads, and notifies you instantly — 24/7." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ─── RESET ─────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #000000;
+    --bg1:       #050507;
+    --bg2:       #080810;
+    --glass:     rgba(255,255,255,0.028);
+    --glass2:    rgba(255,255,255,0.05);
+    --glass3:    rgba(255,255,255,0.08);
+    --border:    rgba(255,255,255,0.07);
+    --border2:   rgba(255,255,255,0.12);
+    --border3:   rgba(255,255,255,0.18);
+    --text:      #ffffff;
+    --text2:     rgba(255,255,255,0.5);
+    --text3:     rgba(255,255,255,0.28);
+    --violet:    #059669;
+    --violet2:   #10b981;
+    --indigo:    #0d9488;
+    --cyan:      #34d399;
+    --green:     #4ade80;
+    --r:         16px;
+    --max:       1140px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+  /* ─── UTILITIES ─────────────────────────────────────────────── */
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  section { padding: 120px 0; }
+
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--border2);
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    color: var(--text2);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 100px;
+    font-family: 'Inter', sans-serif;
+  }
+  .tag .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--violet2); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 26px; border-radius: 10px;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; border: none;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: .01em;
+    transition: all .22s cubic-bezier(.4,0,.2,1);
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: #fff;
+    color: #000;
+  }
+  .btn-primary:hover {
+    background: rgba(255,255,255,.88);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(255,255,255,.12);
+  }
+  .btn-ghost {
+    background: var(--glass);
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    backdrop-filter: blur(12px);
+  }
+  .btn-ghost:hover {
+    border-color: var(--border3);
+    color: var(--text);
+    background: var(--glass2);
+  }
+  .btn-violet {
+    background: linear-gradient(135deg, var(--violet2), var(--violet));
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(5,150,105,.35);
+  }
+  .btn-violet:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 36px rgba(5,150,105,.5);
+  }
+
+  .sh { text-align: center; margin-bottom: 80px; }
+  .sh h2 {
+    font-size: clamp(34px, 4vw, 56px);
+    font-weight: 700; letter-spacing: -.03em;
+    line-height: 1.12; margin: 16px 0 20px;
+  }
+  .sh p {
+    color: var(--text2); font-size: 16px;
+    max-width: 500px; margin: 0 auto; line-height: 1.75;
+  }
+
+  /* gradient text */
+  .g-text {
+    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,.55) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .v-text {
+    background: linear-gradient(135deg, var(--violet2), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* glass card base */
+  .card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    transition: border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .card:hover {
+    border-color: var(--border2);
+    transform: translateY(-3px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  }
+
+  /* ─── NOISE OVERLAY ─────────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: .025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* ─── NAV ───────────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(20px) saturate(1.5);
+  }
+  .nav-wrap {
+    max-width: var(--max); margin: 0 auto; padding: 0 24px;
+    height: 60px; display: flex; align-items: center;
+  }
+  .nav-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -.04em; color: #fff;
+    margin-right: auto;
+  }
+  .nav-logo span { color: var(--violet2); }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px; margin-right: 36px;
+  }
+  .nav-links a {
+    font-size: 13px; color: var(--text2);
+    transition: color .18s; font-weight: 400;
+    letter-spacing: .01em;
+  }
+  .nav-links a:hover { color: #fff; }
+
+  /* ─── HERO ──────────────────────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 0 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* mesh gradient */
+  .mesh {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  }
+  .mesh-blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(120px); opacity: .35;
+  }
+  .mesh-blob.a {
+    width: 700px; height: 700px;
+    top: -200px; left: -100px;
+    background: radial-gradient(circle, #0d9488, transparent 70%);
+  }
+  .mesh-blob.b {
+    width: 600px; height: 600px;
+    top: -100px; right: -150px;
+    background: radial-gradient(circle, #059669, transparent 70%);
+    opacity: .25;
+  }
+  .mesh-blob.c {
+    width: 400px; height: 400px;
+    bottom: -100px; left: 30%;
+    background: radial-gradient(circle, #34d399, transparent 70%);
+    opacity: .12;
+  }
+
+  /* dot grid */
+  .dot-grid {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.12) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+  }
+
+  #hero .container { position: relative; z-index: 1; text-align: center; }
+
+  .hero-live-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(74,222,128,.06);
+    border: 1px solid rgba(74,222,128,.2);
+    color: var(--green);
+    font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+    padding: 6px 14px 6px 10px; border-radius: 100px;
+    margin-bottom: 40px;
+    font-family: 'Inter', sans-serif;
+    cursor: default;
+  }
+  .pulse-dot {
+    width: 7px; height: 7px; background: var(--green);
+    border-radius: 50%; flex-shrink: 0;
+    box-shadow: 0 0 0 0 rgba(74,222,128,.5);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(74,222,128,.45); }
+    70%  { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); }
+  }
+
+  #hero h1 {
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 700;
+    letter-spacing: -.04em;
+    line-height: 1.04;
+    margin: 0 auto 28px;
+    max-width: 900px;
+  }
+  #hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--violet2) 0%, var(--cyan) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  #hero p {
+    font-size: clamp(15px, 1.8vw, 18px);
+    color: var(--text2);
+    max-width: 500px; margin: 0 auto 48px;
+    line-height: 1.75; font-weight: 300;
+  }
+  .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .hero-cta .btn { padding: 14px 28px; font-size: 15px; }
+
+  /* metric strip */
+  .metric-strip {
+    margin-top: 88px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+  }
+  .metric {
+    padding: 32px 28px; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .metric:last-child { border-right: none; }
+  .metric-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 40px; font-weight: 700;
+    letter-spacing: -.04em;
+    background: linear-gradient(135deg, #fff, rgba(255,255,255,.7));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1; margin-bottom: 8px;
+  }
+  .metric-label { font-size: 12px; color: var(--text3); letter-spacing: .06em; text-transform: uppercase; }
+
+  /* ─── BRANDS ────────────────────────────────────────────────── */
+  #brands {
+    padding: 40px 0 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .brands-label {
+    text-align: center; font-size: 11px;
+    color: var(--text3); letter-spacing: .14em; text-transform: uppercase;
+    margin-bottom: 28px; font-family: 'Inter', sans-serif;
+  }
+  .brands-row {
+    display: flex; justify-content: center;
+    align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .brand-chip {
+    font-size: 12px; font-weight: 500;
+    letter-spacing: .05em; text-transform: uppercase;
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 18px;
+    color: var(--text3);
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    transition: all .2s;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .brand-chip:hover { border-color: var(--border2); color: var(--text2); }
+
+  /* ─── HOW IT WORKS ──────────────────────────────────────────── */
+  #how { background: var(--bg1); }
+
+  .timeline {
+    position: relative;
+    display: grid; grid-template-columns: 1fr; gap: 2px;
+  }
+  .tl-item {
+    display: grid; grid-template-columns: 80px 1fr;
+    gap: 0; border: 1px solid var(--border);
+    border-radius: 20px; overflow: hidden;
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .tl-item:hover {
+    border-color: var(--border2);
+    box-shadow: 0 8px 40px rgba(0,0,0,.5);
+  }
+  .tl-num {
+    background: var(--glass2);
+    border-right: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 600; color: var(--text3);
+    letter-spacing: .06em;
+  }
+  .tl-body { padding: 32px 36px; }
+  .tl-body h3 {
+    font-size: 19px; font-weight: 600;
+    letter-spacing: -.02em; margin-bottom: 10px;
+  }
+  .tl-body p { font-size: 14px; color: var(--text2); line-height: 1.75; }
+  .tl-icon {
+    font-size: 20px; margin-bottom: 14px; display: block;
+  }
+
+  /* ─── FEATURES ──────────────────────────────────────────────── */
+  #features { background: var(--bg); }
+
+  .feat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--border);
+    overflow: hidden;
+  }
+  .feat-cell {
+    background: var(--bg);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background .25s;
+  }
+  .feat-cell:hover { background: var(--bg1); }
+  .feat-cell::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border2), transparent);
+  }
+  /* spotlight on hover */
+  .feat-cell::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle 160px at var(--mx, 50%) var(--my, 50%), rgba(5,150,105,.07), transparent 70%);
+    opacity: 0; transition: opacity .3s;
+  }
+  .feat-cell:hover::after { opacity: 1; }
+
+  .feat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; font-weight: 600;
+    color: var(--text3); letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: 20px; display: block;
+  }
+  .feat-icon-wrap {
+    width: 48px; height: 48px;
+    background: var(--glass2);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 20px;
+  }
+  .feat-cell h3 {
+    font-size: 16px; font-weight: 600;
+    letter-spacing: -.01em; margin-bottom: 12px;
+  }
+  .feat-cell p { font-size: 14px; color: var(--text2); line-height: 1.7; }
+
+  /* ─── SOCIAL PROOF ──────────────────────────────────────────── */
+  #proof {
+    background: var(--bg1);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 0;
+  }
+  .proof-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .proof-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 30px;
+    backdrop-filter: blur(20px);
+    transition: border-color .25s, transform .25s;
+  }
+  .proof-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.5);
+  }
+  .proof-stars { color: var(--violet2); font-size: 14px; letter-spacing: 2px; margin-bottom: 18px; }
+  .proof-card blockquote {
+    font-size: 15px; color: var(--text2);
+    line-height: 1.7; font-style: italic;
+    margin-bottom: 24px;
+  }
+  .proof-card blockquote::before { content: '"'; color: var(--violet2); font-size: 20px; line-height: 0; vertical-align: -5px; }
+  .proof-meta { display: flex; align-items: center; gap: 12px; }
+  .proof-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--border2);
+    background: linear-gradient(135deg, var(--violet), var(--indigo));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .proof-name { font-size: 13px; font-weight: 600; line-height: 1.3; }
+  .proof-role { font-size: 11px; color: var(--text3); }
+
+  /* ─── PRICING ───────────────────────────────────────────────── */
+  #pricing { background: var(--bg); }
+  .price-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px; max-width: 980px; margin: 0 auto;
+  }
+  .price-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 36px;
+    backdrop-filter: blur(20px);
+    transition: all .25s;
+    position: relative;
+  }
+  .price-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.5);
+  }
+  /* animated gradient border on featured */
+  .price-card.featured {
+    background: linear-gradient(var(--bg1), var(--bg1)) padding-box,
+                linear-gradient(135deg, var(--violet2), var(--indigo), var(--cyan), var(--violet2)) border-box;
+    border: 1px solid transparent;
+    box-shadow: 0 0 60px rgba(5,150,105,.15), 0 24px 60px rgba(0,0,0,.5);
+  }
+  .feat-label {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--violet2), var(--indigo));
+    color: #fff; font-size: 10px; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 100px;
+    font-family: 'Space Grotesk', sans-serif;
+    white-space: nowrap;
+  }
+  .price-tier {
+    font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text3); margin-bottom: 12px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .price-name {
+    font-size: 26px; font-weight: 700;
+    letter-spacing: -.03em; margin-bottom: 24px;
+  }
+  .price-amount {
+    display: flex; align-items: flex-end; gap: 3px;
+    margin-bottom: 8px;
+  }
+  .price-amount strong {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 54px; font-weight: 700;
+    letter-spacing: -.05em; line-height: 1;
+  }
+  .price-amount span { font-size: 14px; color: var(--text2); padding-bottom: 8px; }
+  .price-desc {
+    font-size: 13px; color: var(--text2); line-height: 1.7;
+    margin-bottom: 28px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .price-list { list-style: none; margin-bottom: 32px; }
+  .price-list li {
+    font-size: 13px; color: var(--text2);
+    padding: 9px 0; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .price-list li:last-child { border-bottom: none; }
+  .price-list .ck { color: var(--violet2); font-size: 11px; }
+  .price-card .btn { width: 100%; justify-content: center; }
+
+  /* ─── DEMO ──────────────────────────────────────────────────── */
+  #demo { background: var(--bg1); }
+  .demo-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .demo-copy h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700; letter-spacing: -.03em;
+    line-height: 1.1; margin: 16px 0 22px;
+  }
+  .demo-copy p {
+    color: var(--text2); font-size: 15px;
+    line-height: 1.8; margin-bottom: 36px;
+  }
+  .demo-bullets { list-style: none; margin-bottom: 40px; }
+  .demo-bullets li {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 14px; color: var(--text2); padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .demo-bullets li:last-child { border-bottom: none; }
+  .demo-bullet-icon {
+    width: 28px; height: 28px;
+    background: var(--glass2); border: 1px solid var(--border2);
+    border-radius: 8px; display: flex; align-items: center;
+    justify-content: center; font-size: 12px; flex-shrink: 0;
+  }
+
+  /* phone mockup */
+  .phone-wrap {
+    display: flex; justify-content: center;
+  }
+  .phone {
+    width: 300px;
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.04),
+      0 32px 80px rgba(0,0,0,.7),
+      inset 0 1px 0 rgba(255,255,255,.06);
+  }
+  .phone-notch {
+    width: 100px; height: 28px; background: var(--bg);
+    border-radius: 0 0 20px 20px;
+    margin: 0 auto;
+    border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    gap: 6px;
+  }
+  .notch-cam {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--glass3);
+  }
+  .notch-mic {
+    width: 40px; height: 4px; border-radius: 4px;
+    background: var(--glass3);
+  }
+  .phone-screen { padding: 0 16px 24px; }
+  .phone-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 4px 16px; border-bottom: 1px solid var(--border);
+  }
+  .phone-ava {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--violet2), var(--indigo));
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .phone-bar-text strong { display: block; font-size: 12px; }
+  .phone-bar-text small { font-size: 10px; color: var(--green); }
+  .phone-msgs { padding: 16px 0; display: flex; flex-direction: column; gap: 10px; }
+  .pm {
+    max-width: 85%; font-size: 11.5px; line-height: 1.55;
+  }
+  .pm.ai { align-self: flex-start; }
+  .pm.me { align-self: flex-end; }
+  .pm p {
+    display: inline-block; padding: 9px 12px; border-radius: 14px;
+  }
+  .pm.ai p { background: var(--glass3); border-radius: 4px 14px 14px 14px; }
+  .pm.me p {
+    background: linear-gradient(135deg, var(--violet2), var(--violet));
+    border-radius: 14px 4px 14px 14px;
+  }
+  .phone-input {
+    display: flex; gap: 6px; align-items: center;
+    background: var(--glass); border: 1px solid var(--border);
+    border-radius: 12px; padding: 8px 10px;
+  }
+  .phone-input span { font-size: 11px; color: var(--text3); flex: 1; }
+  .phone-send {
+    width: 26px; height: 26px;
+    background: linear-gradient(135deg, var(--violet2), var(--violet));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; flex-shrink: 0;
+  }
+
+  /* ─── CTA BAND ──────────────────────────────────────────────── */
+  #cta {
+    padding: 100px 0;
+    position: relative; overflow: hidden;
+  }
+  .cta-mesh {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .cta-mesh-b {
+    position: absolute; border-radius: 50%; filter: blur(100px); opacity: .3;
+  }
+  .cta-mesh-b.a {
+    width: 500px; height: 500px;
+    top: -200px; left: 10%;
+    background: radial-gradient(circle, var(--violet), transparent 70%);
+  }
+  .cta-mesh-b.b {
+    width: 400px; height: 400px;
+    bottom: -180px; right: 10%;
+    background: radial-gradient(circle, var(--indigo), transparent 70%);
+  }
+  .cta-inner {
+    position: relative; z-index: 1; text-align: center;
+    max-width: 720px; margin: 0 auto;
+  }
+  .cta-inner h2 {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700; letter-spacing: -.04em;
+    line-height: 1.08; margin-bottom: 24px;
+  }
+  .cta-inner p {
+    color: var(--text2); font-size: 17px;
+    line-height: 1.75; margin-bottom: 40px;
+  }
+  .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta-btns .btn { padding: 15px 32px; font-size: 15px; }
+
+  /* ─── CONTACT ───────────────────────────────────────────────── */
+  #contact {
+    padding: 100px 0;
+    background: var(--bg1);
+    border-top: 1px solid var(--border);
+  }
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start; max-width: 980px; margin: 0 auto;
+  }
+  .contact-left h2 {
+    font-size: clamp(30px, 3.5vw, 44px);
+    font-weight: 700; letter-spacing: -.03em;
+    line-height: 1.15; margin-bottom: 20px;
+  }
+  .contact-left p {
+    color: var(--text2); font-size: 15px;
+    line-height: 1.75; margin-bottom: 40px;
+  }
+  .contact-perks { list-style: none; }
+  .contact-perks li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: var(--text2);
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+  }
+  .contact-perks li:last-child { border-bottom: none; }
+  .perk-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--violet2); flex-shrink: 0; }
+
+  .contact-form-box {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 36px;
+    backdrop-filter: blur(20px);
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 14px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-field { display: flex; flex-direction: column; gap: 7px; }
+  .form-field label {
+    font-size: 11px; font-weight: 500;
+    color: var(--text3); letter-spacing: .08em; text-transform: uppercase;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .contact-form input,
+  .contact-form select {
+    width: 100%; background: var(--glass);
+    border: 1px solid var(--border); color: var(--text);
+    border-radius: 10px; padding: 12px 16px; font-size: 14px;
+    outline: none; font-family: 'Inter', sans-serif;
+    transition: border .2s, box-shadow .2s;
+    backdrop-filter: blur(12px);
+  }
+  .contact-form input:focus,
+  .contact-form select:focus {
+    border-color: rgba(16,185,129,.5);
+    box-shadow: 0 0 0 3px rgba(5,150,105,.1);
+  }
+  .contact-form input::placeholder { color: var(--text3); }
+  .contact-form select option { background: #0b0b12; }
+  .contact-form .btn {
+    width: 100%; justify-content: center;
+    padding: 14px; font-size: 14px; margin-top: 4px;
+  }
+
+  /* ─── FOOTER ────────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 0 32px;
+    background: var(--bg);
+  }
+  .foot-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; flex-wrap: wrap; gap: 32px;
+    margin-bottom: 48px;
+  }
+  .foot-brand .logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px; font-weight: 700; letter-spacing: -.04em;
+    margin-bottom: 10px;
+  }
+  .foot-brand .logo span { color: var(--violet2); }
+  .foot-brand p { font-size: 13px; color: var(--text3); max-width: 240px; line-height: 1.6; }
+  .foot-nav { display: flex; gap: 56px; flex-wrap: wrap; }
+  .foot-col h5 {
+    font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--text3); margin-bottom: 16px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .foot-col ul a { font-size: 13px; color: var(--text2); transition: color .18s; }
+  .foot-col ul a:hover { color: var(--text); }
+  .foot-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .foot-copy { font-size: 12px; color: var(--text3); }
+  .foot-right { font-size: 12px; color: var(--text3); }
+  .foot-right span { color: var(--violet2); }
+
+  /* ─── CHAT WIDGET ───────────────────────────────────────────── */
+  #widget-btn {
+    position: fixed; bottom: 28px; right: 28px; z-index: 999;
+    width: 58px; height: 58px;
+    background: linear-gradient(135deg, var(--violet2), var(--violet));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; border: none;
+    box-shadow: 0 4px 24px rgba(5,150,105,.5), 0 0 0 1px rgba(16,185,129,.3);
+    transition: all .25s cubic-bezier(.4,0,.2,1);
+  }
+  #widget-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 40px rgba(5,150,105,.65), 0 0 0 1px rgba(16,185,129,.4);
+  }
+  #widget-btn svg { width: 22px; height: 22px; fill: #fff; }
+  .w-notif {
+    position: absolute; top: -2px; right: -2px;
+    width: 18px; height: 18px;
+    background: #ef4444;
+    border-radius: 50%; border: 2px solid var(--bg);
+    font-size: 9px; font-weight: 700; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  #widget-panel {
+    position: fixed; bottom: 100px; right: 28px; z-index: 999;
+    width: 372px; max-height: 600px;
+    background: rgba(8,8,14,0.92);
+    border: 1px solid var(--border2);
+    border-radius: 24px;
+    box-shadow: 0 32px 80px rgba(0,0,0,.8), 0 0 0 1px rgba(16,185,129,.1);
+    backdrop-filter: blur(32px);
+    display: none; flex-direction: column;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+  }
+  #widget-panel.open { display: flex; }
+
+  .w-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 12px;
+    background: var(--glass);
+  }
+  .w-ava {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--violet2), var(--violet));
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px; font-weight: 700; flex-shrink: 0;
+  }
+  .w-info strong { display: block; font-size: 14px; font-weight: 600; }
+  .w-info small {
+    font-size: 11px; color: var(--green);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .w-info small::before {
+    content: ''; width: 5px; height: 5px;
+    background: var(--green); border-radius: 50%; flex-shrink: 0;
+  }
+  .w-close {
+    margin-left: auto; background: none; border: none;
+    color: var(--text3); cursor: pointer; font-size: 16px;
+    line-height: 1; transition: color .18s; padding: 4px;
+  }
+  .w-close:hover { color: #fff; }
+
+  #w-lead {
+    padding: 26px 22px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  #w-lead p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+  #w-lead input {
+    width: 100%; background: var(--glass);
+    border: 1px solid var(--border); color: var(--text);
+    border-radius: 10px; padding: 11px 15px; font-size: 13px;
+    outline: none; font-family: 'Inter', sans-serif; transition: border .2s;
+    backdrop-filter: blur(12px);
+  }
+  #w-lead input::placeholder { color: var(--text3); }
+  #w-lead input:focus {
+    border-color: rgba(16,185,129,.5);
+    box-shadow: 0 0 0 3px rgba(5,150,105,.1);
+  }
+  #w-lead button {
+    background: linear-gradient(135deg, var(--violet2), var(--violet));
+    color: #fff; border: none; border-radius: 10px;
+    padding: 12px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: opacity .2s;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: .01em;
+  }
+  #w-lead button:hover { opacity: .85; }
+
+  #w-msgs {
+    flex: 1; overflow-y: auto; padding: 20px 20px 8px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  #w-msgs::-webkit-scrollbar { width: 3px; }
+  #w-msgs::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+  .wm { max-width: 84%; display: flex; flex-direction: column; }
+  .wm.ai { align-self: flex-start; }
+  .wm.user { align-self: flex-end; text-align: right; }
+  .wm-b {
+    padding: 11px 15px; border-radius: 14px;
+    font-size: 13px; line-height: 1.6;
+  }
+  .wm.ai .wm-b {
+    background: var(--glass2); color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 4px 14px 14px 14px;
+  }
+  .wm.user .wm-b {
+    background: linear-gradient(135deg, var(--violet2), var(--violet));
+    color: #fff;
+    border-radius: 14px 4px 14px 14px;
+  }
+  .wm-t { font-size: 10px; color: var(--text3); margin-top: 5px; padding: 0 4px; }
+
+  .typing-dots {
+    display: flex; gap: 5px; align-items: center;
+    padding: 13px 16px;
+  }
+  .typing-dots span {
+    width: 6px; height: 6px;
+    background: var(--border3); border-radius: 50%;
+    animation: td 1.3s infinite;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: .2s; }
+  .typing-dots span:nth-child(3) { animation-delay: .4s; }
+  @keyframes td {
+    0%,100% { transform: translateY(0); opacity: .35; }
+    50% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  #w-input-row {
+    padding: 14px 16px 18px;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 8px;
+  }
+  #w-input-row input {
+    flex: 1; background: var(--glass);
+    border: 1px solid var(--border); color: var(--text);
+    border-radius: 10px; padding: 11px 15px; font-size: 13px;
+    outline: none; font-family: 'Inter', sans-serif; transition: border .2s;
+    backdrop-filter: blur(12px);
+  }
+  #w-input-row input::placeholder { color: var(--text3); }
+  #w-input-row input:focus {
+    border-color: rgba(16,185,129,.4);
+    box-shadow: 0 0 0 3px rgba(5,150,105,.08);
+  }
+  #w-input-row button {
+    background: linear-gradient(135deg, var(--violet2), var(--violet));
+    border: none; color: #fff;
+    border-radius: 10px; width: 42px; flex-shrink: 0;
+    cursor: pointer; font-size: 14px; transition: opacity .2s;
+  }
+  #w-input-row button:hover { opacity: .85; }
+
+  /* ─── RESPONSIVE ────────────────────────────────────────────── */
+  @media (max-width: 960px) {
+    .feat-grid { grid-template-columns: repeat(2,1fr); }
+    .proof-grid { grid-template-columns: repeat(2,1fr); }
+    .price-grid { grid-template-columns: 1fr; max-width: 420px; }
+    .demo-grid { grid-template-columns: 1fr; }
+    .contact-wrap { grid-template-columns: 1fr; }
+    .metric-strip { grid-template-columns: repeat(2,1fr); }
+    .metric:nth-child(2) { border-right: none; }
+    .metric:nth-child(3) { border-top: 1px solid var(--border); }
+    .metric:nth-child(4) { border-top: 1px solid var(--border); }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .feat-grid { grid-template-columns: 1fr; }
+    .proof-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .metric-strip { grid-template-columns: repeat(2,1fr); }
+    #widget-panel { right: 12px; bottom: 88px; width: calc(100vw - 24px); }
+    #widget-btn { right: 16px; bottom: 20px; }
+    .foot-nav { gap: 32px; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-wrap">
+    <span class="nav-logo">Levlin <span>Tech</span></span>
+    <div class="nav-links">
+      <a href="#how">How it Works</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#demo">Demo</a>
+    </div>
+    <a href="#contact" class="btn btn-ghost" style="padding:9px 20px;font-size:13px;">Book a Demo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="mesh">
+    <div class="mesh-blob a"></div>
+    <div class="mesh-blob b"></div>
+    <div class="mesh-blob c"></div>
+  </div>
+  <div class="dot-grid"></div>
+  <div class="container">
+    <div class="hero-live-badge">
+      <div class="pulse-dot"></div>
+      AI Receptionist — Live 24/7
+    </div>
+
+    <h1>
+      Your business,<br>
+      <em>always answering.</em>
+    </h1>
+
+    <p>
+      Levlin Tech is the AI front desk for local businesses — answers every chat and call, captures every lead, and notifies you before the competition picks up the phone.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary">Get Started Free &rarr;</a>
+      <a href="#demo" class="btn btn-ghost">See Live Demo</a>
+    </div>
+
+    <div class="metric-strip">
+      <div class="metric">
+        <div class="metric-val">24/7</div>
+        <div class="metric-label">Always On</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">&lt;2s</div>
+        <div class="metric-label">Response Time</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">100%</div>
+        <div class="metric-label">Leads Captured</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">3×</div>
+        <div class="metric-label">More Conversions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS -->
+<section id="brands">
+  <div class="container">
+    <p class="brands-label">Built for local businesses across the Midwest</p>
+    <div class="brands-row">
+      <span class="brand-chip">Real Estate</span>
+      <span class="brand-chip">Law Firms</span>
+      <span class="brand-chip">Dental Clinics</span>
+      <span class="brand-chip">Home Services</span>
+      <span class="brand-chip">Med Spas</span>
+      <span class="brand-chip">Auto Shops</span>
+      <span class="brand-chip">Insurance</span>
+      <span class="brand-chip">Chiropractic</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="sh">
+      <span class="tag"><span class="dot"></span>How It Works</span>
+      <h2>Set up in minutes.<br><span class="g-text">Never miss a lead again.</span></h2>
+      <p>Levlin connects to your website through a single line of code and starts converting visitors into customers immediately.</p>
+    </div>
+    <div class="timeline" style="gap:2px;">
+      <div class="tl-item">
+        <div class="tl-num">01</div>
+        <div class="tl-body">
+          <span class="tl-icon">🔌</span>
+          <h3>Embed on Your Website</h3>
+          <p>Copy one snippet into your site. The AI chat widget appears instantly — no developer needed, no downtime.</p>
+        </div>
+      </div>
+      <div class="tl-item" style="margin-top:2px;">
+        <div class="tl-num">02</div>
+        <div class="tl-body">
+          <span class="tl-icon">⚡</span>
+          <h3>AI Responds in Under 2 Seconds</h3>
+          <p>Visitors ask questions. Levlin answers immediately — trained on your services, pricing, hours, and business personality.</p>
+        </div>
+      </div>
+      <div class="tl-item" style="margin-top:2px;">
+        <div class="tl-num">03</div>
+        <div class="tl-body">
+          <span class="tl-icon">🎯</span>
+          <h3>Every Lead is Automatically Captured</h3>
+          <p>Names, emails, and phone numbers are collected before the conversation begins and saved to your dashboard instantly.</p>
+        </div>
+      </div>
+      <div class="tl-item" style="margin-top:2px;">
+        <div class="tl-num">04</div>
+        <div class="tl-body">
+          <span class="tl-icon">🔔</span>
+          <h3>You Get Notified — Right Now</h3>
+          <p>The moment a hot lead engages, you receive a real-time alert via text or email with the full conversation context.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="sh">
+      <span class="tag"><span class="dot"></span>Features</span>
+      <h2>Everything a world-class<br><span class="v-text">front desk does.</span></h2>
+      <p>Levlin handles the entire customer intake experience so you can stay focused on the work that matters.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-cell">
+        <span class="feat-num">01</span>
+        <div class="feat-icon-wrap">💬</div>
+        <h3>AI Website Chat</h3>
+        <p>A premium chat widget that qualifies visitors, answers questions, and collects contact info — around the clock.</p>
+      </div>
+      <div class="feat-cell">
+        <span class="feat-num">02</span>
+        <div class="feat-icon-wrap">📞</div>
+        <h3>Voice AI Receptionist</h3>
+        <p>An AI that picks up your phone, handles common questions, and routes priority calls directly to you instantly.</p>
+      </div>
+      <div class="feat-cell">
+        <span class="feat-num">03</span>
+        <div class="feat-icon-wrap">🎯</div>
+        <h3>Automatic Lead Capture</h3>
+        <p>Every visitor who engages with Levlin has their name, email, and phone logged and ready for follow-up.</p>
+      </div>
+      <div class="feat-cell">
+        <span class="feat-num">04</span>
+        <div class="feat-icon-wrap">🔔</div>
+        <h3>Real-Time Notifications</h3>
+        <p>Text or email alerts the moment a new lead comes in — with full context so you can respond with confidence.</p>
+      </div>
+      <div class="feat-cell">
+        <span class="feat-num">05</span>
+        <div class="feat-icon-wrap">🧠</div>
+        <h3>Custom AI Training</h3>
+        <p>Train on your exact business: services, pricing, FAQs, and brand voice. Your AI speaks exactly as you would.</p>
+      </div>
+      <div class="feat-cell">
+        <span class="feat-num">06</span>
+        <div class="feat-icon-wrap">📊</div>
+        <h3>Lead Dashboard</h3>
+        <p>Every lead, every conversation, every interaction — organized in one clean, searchable dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section id="proof">
+  <div class="container">
+    <div class="proof-grid">
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <blockquote>Levlin captured 3 qualified leads the very first night we turned it on. Woke up to hot prospects already in my inbox.</blockquote>
+        <div class="proof-meta">
+          <div class="proof-avatar">JR</div>
+          <div>
+            <div class="proof-name">James R.</div>
+            <div class="proof-role">Real Estate Agent · Chicago, IL</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <blockquote>Our office used to miss 30% of incoming calls. Now every single inquiry is answered, logged, and followed up. Remarkable product.</blockquote>
+        <div class="proof-meta">
+          <div class="proof-avatar">DP</div>
+          <div>
+            <div class="proof-name">Dr. Patel</div>
+            <div class="proof-role">Dental Practice · Columbus, OH</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <div class="proof-stars">★★★★★</div>
+        <blockquote>Worth every dollar. One new case from the chat widget in the first week paid for an entire year of Levlin.</blockquote>
+        <div class="proof-meta">
+          <div class="proof-avatar">AK</div>
+          <div>
+            <div class="proof-name">Amanda K.</div>
+            <div class="proof-role">Attorney · Detroit, MI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="sh">
+      <span class="tag"><span class="dot"></span>Pricing</span>
+      <h2>Clear, flat-rate pricing.<br><span class="g-text">No surprises.</span></h2>
+      <p>No setup fees. No contracts. Cancel any time. Start converting leads today.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-name">Chat AI</div>
+        <div class="price-amount"><strong>$500</strong><span>/mo</span></div>
+        <div class="price-desc">For small businesses ready to stop missing leads and start capturing every opportunity automatically.</div>
+        <ul class="price-list">
+          <li><span class="ck">✦</span> AI Website Chat Widget</li>
+          <li><span class="ck">✦</span> Up to 500 conversations/mo</li>
+          <li><span class="ck">✦</span> Lead capture — name & email</li>
+          <li><span class="ck">✦</span> Email notifications</li>
+          <li><span class="ck">✦</span> Lead dashboard</li>
+          <li><span class="ck">✦</span> Basic AI customization</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Get Started</a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="feat-label">Most Popular</div>
+        <div class="price-tier">Professional</div>
+        <div class="price-name">Chat + Voice</div>
+        <div class="price-amount"><strong>$750</strong><span>/mo</span></div>
+        <div class="price-desc">Full AI coverage across chat and phone. Not a single lead slips through the cracks.</div>
+        <ul class="price-list">
+          <li><span class="ck">✦</span> Everything in Starter</li>
+          <li><span class="ck">✦</span> Unlimited conversations</li>
+          <li><span class="ck">✦</span> Voice AI Receptionist</li>
+          <li><span class="ck">✦</span> SMS + Email notifications</li>
+          <li><span class="ck">✦</span> Full AI customization</li>
+          <li><span class="ck">✦</span> CRM integrations</li>
+        </ul>
+        <a href="#contact" class="btn btn-violet">Get Started</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-tier">Agency</div>
+        <div class="price-name">Multi-Client</div>
+        <div class="price-amount"><strong>$1,000</strong><span>/mo</span></div>
+        <div class="price-desc">For agencies deploying AI receptionists across multiple client businesses from a single dashboard.</div>
+        <ul class="price-list">
+          <li><span class="ck">✦</span> Everything in Professional</li>
+          <li><span class="ck">✦</span> Up to 5 client businesses</li>
+          <li><span class="ck">✦</span> White-label branding</li>
+          <li><span class="ck">✦</span> Priority support</li>
+          <li><span class="ck">✦</span> Custom integrations</li>
+          <li><span class="ck">✦</span> Dedicated onboarding</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="container">
+    <div class="demo-grid">
+      <div class="demo-copy">
+        <span class="tag"><span class="dot"></span>Live Demo</span>
+        <h2>See Levlin Tech working<br><em style="font-style:normal;background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">right now.</em></h2>
+        <p>Click the chat icon in the bottom corner and ask anything. This is the exact same AI your customers experience on your website.</p>
+        <ul class="demo-bullets">
+          <li>
+            <div class="demo-bullet-icon">💬</div>
+            Ask about services, pricing, or hours
+          </li>
+          <li>
+            <div class="demo-bullet-icon">📅</div>
+            Request a callback or book an appointment
+          </li>
+          <li>
+            <div class="demo-bullet-icon">🎯</div>
+            Watch your lead get captured automatically
+          </li>
+          <li>
+            <div class="demo-bullet-icon">🔔</div>
+            You receive a notification in real time
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Deploy on My Website &rarr;</a>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-notch">
+            <div class="notch-cam"></div>
+            <div class="notch-mic"></div>
+            <div class="notch-cam"></div>
+          </div>
+          <div class="phone-screen">
+            <div class="phone-bar">
+              <div class="phone-ava">L</div>
+              <div class="phone-bar-text">
+                <strong>Levlin AI</strong>
+                <small>● Online now</small>
+              </div>
+            </div>
+            <div class="phone-msgs">
+              <div class="pm ai"><p>👋 Hi! I'm Levlin Tech. How can I help you today?</p></div>
+              <div class="pm me"><p>What are your hours?</p></div>
+              <div class="pm ai"><p>We're open Mon–Fri, 9am–6pm. Want me to book a callback for you?</p></div>
+              <div class="pm me"><p>Yes, please do</p></div>
+              <div class="pm ai"><p>Perfect! What's the best number to reach you? 😊</p></div>
+            </div>
+            <div class="phone-input">
+              <span>Message Levlin Tech…</span>
+              <div class="phone-send">➤</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section id="cta">
+  <div class="cta-mesh">
+    <div class="cta-mesh-b a"></div>
+    <div class="cta-mesh-b b"></div>
+  </div>
+  <div class="container">
+    <div class="cta-inner">
+      <h2>Stop losing leads to<br><em style="font-style:normal;background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">missed calls.</em></h2>
+      <p>Every unanswered message is a customer who went to your competitor. Levlin ensures that never happens again — starting today.</p>
+      <div class="cta-btns">
+        <a href="#contact" class="btn btn-primary">Book a Free Demo &rarr;</a>
+        <a href="#pricing" class="btn btn-ghost">View Pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-wrap">
+      <div class="contact-left">
+        <span class="tag" style="margin-bottom:24px;display:inline-flex;"><span class="dot"></span>Get Started</span>
+        <h2>Book your<br>free demo.</h2>
+        <p>A 20-minute call to walk you through exactly how Levlin works for your business type. No pressure, no sales pitch.</p>
+        <ul class="contact-perks">
+          <li><span class="perk-dot"></span>Live walkthrough of the platform</li>
+          <li><span class="perk-dot"></span>Custom demo built for your business</li>
+          <li><span class="perk-dot"></span>Full setup + onboarding included</li>
+          <li><span class="perk-dot"></span>No contracts — cancel any time</li>
+        </ul>
+      </div>
+      <div class="contact-form-box">
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="form-field">
+              <label>First Name</label>
+              <input type="text" placeholder="John" required />
+            </div>
+            <div class="form-field">
+              <label>Last Name</label>
+              <input type="text" placeholder="Smith" required />
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Business Email</label>
+            <input type="email" placeholder="john@yourbusiness.com" required />
+          </div>
+          <div class="form-field">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="+1 (555) 000-0000" />
+          </div>
+          <div class="form-field">
+            <label>Business Type</label>
+            <select required>
+              <option value="" disabled selected>Select your industry</option>
+              <option>Real Estate</option>
+              <option>Law Firm</option>
+              <option>Dental / Medical</option>
+              <option>Home Services</option>
+              <option>Med Spa / Beauty</option>
+              <option>Auto Shop</option>
+              <option>Insurance</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-violet">Reserve My Demo Spot &rarr;</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="logo">Levlin <span>Tech</span></div>
+        <p>AI-powered front desk for local businesses — chat, voice, and lead capture in one platform.</p>
+      </div>
+      <div class="foot-nav">
+        <div class="foot-col">
+          <h5>Product</h5>
+          <ul>
+            <li><a href="#how">How it Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#demo">Demo</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#contact">Book a Demo</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="foot-copy">© 2025 Levlin Tech. All rights reserved.</span>
+      <span class="foot-right">Built for the <span>Midwest</span></span>
+    </div>
+  </div>
+</footer>
+
+<!-- CHAT WIDGET -->
+<button id="widget-btn" aria-label="Open chat">
+  <div class="w-notif">1</div>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+  </svg>
+</button>
+
+<div id="widget-panel">
+  <div class="w-header">
+    <div class="w-ava">L</div>
+    <div class="w-info">
+      <strong>Levlin Tech AI</strong>
+      <small>Online — replies instantly</small>
+    </div>
+    <button class="w-close" id="w-close">✕</button>
+  </div>
+
+  <div id="w-lead">
+    <p>👋 Hello! Before we start, what's your name?</p>
+    <input type="text" id="l-name" placeholder="Your full name" />
+    <input type="email" id="l-email" placeholder="Email (optional)" />
+    <input type="tel" id="l-phone" placeholder="Phone number (optional)" />
+    <button id="l-start">Start Chatting &rarr;</button>
+  </div>
+
+  <div id="w-msgs" style="display:none;"></div>
+  <div id="w-input-row" style="display:none;">
+    <input type="text" id="w-input" placeholder="Type your message…" autocomplete="off" />
+    <button id="w-send">➤</button>
+  </div>
+</div>
+
+<script>
+  // ── CONFIG — replace with your n8n webhook URL ─────────────────
+  const WEBHOOK_URL = 'https://YOUR-N8N-INSTANCE.com/webhook/YOUR-WEBHOOK-ID';
+
+  // ── Feature card spotlight effect ─────────────────────────────
+  document.querySelectorAll('.feat-cell').forEach(cell => {
+    cell.addEventListener('mousemove', e => {
+      const r = cell.getBoundingClientRect();
+      cell.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      cell.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  });
+
+  // ── Widget ─────────────────────────────────────────────────────
+  let lead = { name: '', email: '', phone: '' };
+  const btn     = document.getElementById('widget-btn');
+  const panel   = document.getElementById('widget-panel');
+  const cls     = document.getElementById('w-close');
+  const leadDiv = document.getElementById('w-lead');
+  const msgs    = document.getElementById('w-msgs');
+  const iRow    = document.getElementById('w-input-row');
+  const inp     = document.getElementById('w-input');
+  const send    = document.getElementById('w-send');
+  const lStart  = document.getElementById('l-start');
+
+  btn.addEventListener('click', () => {
+    panel.classList.toggle('open');
+    const n = btn.querySelector('.w-notif');
+    if (n) n.remove();
+  });
+  cls.addEventListener('click', () => panel.classList.remove('open'));
+
+  lStart.addEventListener('click', () => {
+    const name = document.getElementById('l-name').value.trim();
+    if (!name) { document.getElementById('l-name').focus(); return; }
+    lead.name  = name;
+    lead.email = document.getElementById('l-email').value.trim();
+    lead.phone = document.getElementById('l-phone').value.trim();
+    leadDiv.style.display = 'none';
+    msgs.style.display    = 'flex';
+    iRow.style.display    = 'flex';
+    addMsg('ai', `Hello ${name} 👋 I'm Levlin Tech, your AI receptionist. How can I help you today?`);
+    inp.focus();
+  });
+
+  async function sendMsg() {
+    const text = inp.value.trim();
+    if (!text) return;
+    inp.value = '';
+    addMsg('user', text);
+    const t = showTyping();
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: text,
+          lead,
+          source: 'website_chat',
+          timestamp: new Date().toISOString()
+        })
+      });
+      t.remove();
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      const reply = data.reply || data.message || data.response
+        || (typeof data === 'string' ? data : null)
+        || 'Thank you! A team member will follow up shortly.';
+      addMsg('ai', reply);
+    } catch {
+      t.remove();
+      addMsg('ai', "I'm having a bit of trouble connecting right now. Please try again in a moment.");
+    }
+  }
+
+  send.addEventListener('click', sendMsg);
+  inp.addEventListener('keydown', e => { if (e.key === 'Enter') sendMsg(); });
+
+  function addMsg(role, text) {
+    const m = document.createElement('div');
+    m.className = `wm ${role}`;
+    const b = document.createElement('div');
+    b.className = 'wm-b'; b.textContent = text;
+    const t = document.createElement('span');
+    t.className = 'wm-t';
+    t.textContent = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    m.appendChild(b); m.appendChild(t);
+    msgs.appendChild(m);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function showTyping() {
+    const el = document.createElement('div');
+    el.className = 'wm ai';
+    el.innerHTML = `<div class="wm-b" style="padding:0;background:var(--glass2);border:1px solid var(--border)"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+    return el;
+  }
+
+  document.getElementById('contact-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const b = e.target.querySelector('button[type=submit]');
+    b.textContent = 'Sending…'; b.disabled = true;
+    await new Promise(r => setTimeout(r, 1100));
+    b.textContent = '✦ Demo booked — we\'ll be in touch!';
+    b.style.background = 'linear-gradient(135deg,#4ade80,#16a34a)';
+  });
+</script>
+
+</body>
+</html>
