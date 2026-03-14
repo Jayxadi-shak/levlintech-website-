@@ -369,10 +369,15 @@
     if (sendBtn) sendBtn.disabled = true;
     isWaiting = true; showTyping();
     try {
+      // Build history: all prior messages except the one just added (last item)
+      const history = messages.slice(0, -1).map(m => ({
+        role: m.role === 'bot' ? 'assistant' : 'user',
+        content: m.text
+      }));
       const res = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        body: JSON.stringify({ message: text, history })
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();

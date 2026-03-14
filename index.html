@@ -1261,8 +1261,15 @@
         })
       });
     } catch(_) {}
-    b.textContent = '✦ Demo booked — we\'ll be in touch!';
-    b.style.background = 'linear-gradient(135deg,#4ade80,#16a34a)';
+    // Replace form with success message
+    const form = document.getElementById('contact-form');
+    form.innerHTML = `
+      <div style="text-align:center;padding:40px 20px;">
+        <div style="font-size:48px;margin-bottom:16px;">✅</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;color:#fff;margin-bottom:10px;">You're on the list!</h3>
+        <p style="color:rgba(255,255,255,0.55);font-size:15px;line-height:1.6;">We'll reach out within 24 hours to schedule your free 20-minute demo.<br>Check your email for a confirmation.</p>
+      </div>
+    `;
   });
 </script>
 
