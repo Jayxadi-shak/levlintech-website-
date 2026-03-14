@@ -268,6 +268,9 @@
         height: 100dvh; max-height: 100dvh;
         border-radius: 0;
         border: none;
+        background: #0a0a0a;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
       }
       #lvl-launcher { bottom: 20px; right: 20px; }
       #lvl-header { padding: 14px 16px; }
