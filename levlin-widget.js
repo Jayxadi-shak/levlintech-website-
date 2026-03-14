@@ -249,15 +249,37 @@
     #lvl-powered a { color: rgba(16,185,129,0.7); text-decoration: none; }
     #lvl-powered a:hover { color: #10b981; }
 
+    #lvl-close-btn {
+      display: none;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer; align-items: center; justify-content: center;
+      flex-shrink: 0; color: rgba(255,255,255,0.7);
+      transition: background 0.2s;
+    }
+    #lvl-close-btn:hover { background: rgba(255,255,255,0.14); }
+    #lvl-close-btn svg { width: 18px; height: 18px; fill: rgba(255,255,255,0.8); }
+
     @media (max-width: 480px) {
       #lvl-window {
-        bottom: 0; right: 0;
+        bottom: 0; right: 0; left: 0;
         width: 100%; max-width: 100%;
-        height: 100%; max-height: 100%;
-        border-radius: 20px 20px 0 0;
-        border-left: none; border-right: none; border-bottom: none;
+        height: 100dvh; max-height: 100dvh;
+        border-radius: 0;
+        border: none;
       }
-      #lvl-launcher { bottom: 16px; right: 16px; }
+      #lvl-launcher { bottom: 20px; right: 20px; }
+      #lvl-header { padding: 14px 16px; }
+      #lvl-close-btn { display: flex !important; }
+      #lvl-messages { padding: 16px 12px; }
+      #lvl-input { font-size: 16px !important; padding: 12px 14px; }
+      #lvl-send { width: 46px; height: 46px; }
+      #lvl-footer {
+        padding: 10px 12px;
+        padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+      }
+      .lvl-bubble { font-size: 15px; padding: 11px 15px; }
     }
   `;
 
@@ -304,6 +326,7 @@
           <div id="lvl-header-name">Levlin AI Assistant</div>
           <div id="lvl-header-status"><div id="lvl-status-dot"></div>Online · replies instantly</div>
         </div>
+        <button id="lvl-close-btn" aria-label="Close chat">${closeIcon}</button>
       </div>
       <div id="lvl-messages" aria-live="polite">
         <div id="lvl-typing"><span></span><span></span><span></span></div>
@@ -364,11 +387,14 @@
 
   const toggleChat = () => isOpen ? closeChat() : openChat();
 
+  const isMobile = () => window.innerWidth <= 480;
+
   function openChat() {
     isOpen = true; clearBadge();
     document.getElementById('lvl-window').classList.add('lvl-open');
     document.getElementById('lvl-launcher').classList.add('lvl-open');
     document.getElementById('lvl-launcher').setAttribute('aria-label', 'Close chat');
+    if (isMobile()) document.body.style.overflow = 'hidden';
     setTimeout(() => { document.getElementById('lvl-input')?.focus(); scrollBottom(); }, 50);
   }
 
@@ -377,14 +403,17 @@
     document.getElementById('lvl-window').classList.remove('lvl-open');
     document.getElementById('lvl-launcher').classList.remove('lvl-open');
     document.getElementById('lvl-launcher').setAttribute('aria-label', 'Open chat');
+    document.body.style.overflow = '';
   }
 
   function bindInput() {
     const input = document.getElementById('lvl-input');
     const sendBtn = document.getElementById('lvl-send');
+    const closeBtn = document.getElementById('lvl-close-btn');
     input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 120) + 'px'; });
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(input.value); } });
     sendBtn.addEventListener('click', () => sendMessage(input.value));
+    if (closeBtn) closeBtn.addEventListener('click', closeChat);
   }
 
   function init() {
