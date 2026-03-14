@@ -5,7 +5,7 @@
   const BACKEND_URL = 'https://levlin-tech-backend.vercel.app';
   const WEBHOOK_URL = BACKEND_URL + '/api/chat';
   const STORAGE_KEY = 'levlin_chat_history';
-  const GREETING = 'Hi! How can I help you today?';
+  const GREETING = 'Hey, welcome to Levlin Tech! We help local businesses never miss a lead with a 24/7 AI receptionist. What kind of business do you run?';
 
   // ── Styles ─────────────────────────────────────────────────────────────────
   const css = `
