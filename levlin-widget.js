@@ -394,11 +394,10 @@
     const win = document.getElementById('lvl-window');
     if (!win) return;
     const vp = window.visualViewport;
-    if (vp) {
-      win.style.height = vp.height + 'px';
-      win.style.top = vp.offsetTop + 'px';
-      win.style.bottom = 'auto';
-    }
+    const h = vp ? vp.height : window.innerHeight;
+    win.style.height = h + 'px';
+    win.style.top = '0px';
+    win.style.bottom = 'auto';
     scrollBottom();
   }
 
@@ -413,9 +412,11 @@
   function openChat() {
     isOpen = true; clearBadge();
     document.getElementById('lvl-window').classList.add('lvl-open');
-    document.getElementById('lvl-launcher').classList.add('lvl-open');
-    document.getElementById('lvl-launcher').setAttribute('aria-label', 'Close chat');
+    const launcher = document.getElementById('lvl-launcher');
+    launcher.classList.add('lvl-open');
+    launcher.setAttribute('aria-label', 'Close chat');
     if (isMobile()) {
+      launcher.style.display = 'none';
       document.body.style.overflow = 'hidden';
       applyViewport();
       if (window.visualViewport) window.visualViewport.addEventListener('resize', applyViewport);
@@ -426,8 +427,10 @@
   function closeChat() {
     isOpen = false;
     document.getElementById('lvl-window').classList.remove('lvl-open');
-    document.getElementById('lvl-launcher').classList.remove('lvl-open');
-    document.getElementById('lvl-launcher').setAttribute('aria-label', 'Open chat');
+    const launcher = document.getElementById('lvl-launcher');
+    launcher.classList.remove('lvl-open');
+    launcher.setAttribute('aria-label', 'Open chat');
+    launcher.style.display = '';
     document.body.style.overflow = '';
     resetViewport();
     if (window.visualViewport) window.visualViewport.removeEventListener('resize', applyViewport);
