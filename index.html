@@ -777,168 +777,6 @@
   .foot-right { font-size: 12px; color: var(--text3); }
   .foot-right span { color: var(--violet2); }
 
-  /* ─── CHAT WIDGET ───────────────────────────────────────────── */
-  #widget-btn {
-    position: fixed; bottom: 28px; right: 28px; z-index: 999;
-    width: 58px; height: 58px;
-    background: linear-gradient(135deg, var(--violet2), var(--violet));
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; border: none;
-    box-shadow: 0 4px 24px rgba(5,150,105,.5), 0 0 0 1px rgba(16,185,129,.3);
-    transition: all .25s cubic-bezier(.4,0,.2,1);
-  }
-  #widget-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 40px rgba(5,150,105,.65), 0 0 0 1px rgba(16,185,129,.4);
-  }
-  #widget-btn svg { width: 22px; height: 22px; fill: #fff; }
-  .w-notif {
-    position: absolute; top: -2px; right: -2px;
-    width: 18px; height: 18px;
-    background: #ef4444;
-    border-radius: 50%; border: 2px solid var(--bg);
-    font-size: 9px; font-weight: 700; color: #fff;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Grotesk', sans-serif;
-  }
-
-  #widget-panel {
-    position: fixed; bottom: 100px; right: 28px; z-index: 999;
-    width: 372px; max-height: 600px;
-    background: rgba(8,8,14,0.92);
-    border: 1px solid var(--border2);
-    border-radius: 24px;
-    box-shadow: 0 32px 80px rgba(0,0,0,.8), 0 0 0 1px rgba(16,185,129,.1);
-    backdrop-filter: blur(32px);
-    display: none; flex-direction: column;
-    overflow: hidden;
-    font-family: 'Inter', sans-serif;
-  }
-  #widget-panel.open { display: flex; }
-
-  .w-header {
-    padding: 18px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 12px;
-    background: var(--glass);
-  }
-  .w-ava {
-    width: 38px; height: 38px;
-    background: linear-gradient(135deg, var(--violet2), var(--violet));
-    border-radius: 50%; display: flex; align-items: center;
-    justify-content: center; font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px; font-weight: 700; flex-shrink: 0;
-  }
-  .w-info strong { display: block; font-size: 14px; font-weight: 600; }
-  .w-info small {
-    font-size: 11px; color: var(--green);
-    display: flex; align-items: center; gap: 5px;
-  }
-  .w-info small::before {
-    content: ''; width: 5px; height: 5px;
-    background: var(--green); border-radius: 50%; flex-shrink: 0;
-  }
-  .w-close {
-    margin-left: auto; background: none; border: none;
-    color: var(--text3); cursor: pointer; font-size: 16px;
-    line-height: 1; transition: color .18s; padding: 4px;
-  }
-  .w-close:hover { color: #fff; }
-
-  #w-lead {
-    padding: 26px 22px;
-    display: flex; flex-direction: column; gap: 12px;
-  }
-  #w-lead p { font-size: 14px; color: var(--text2); line-height: 1.6; }
-  #w-lead input {
-    width: 100%; background: var(--glass);
-    border: 1px solid var(--border); color: var(--text);
-    border-radius: 10px; padding: 11px 15px; font-size: 13px;
-    outline: none; font-family: 'Inter', sans-serif; transition: border .2s;
-    backdrop-filter: blur(12px);
-  }
-  #w-lead input::placeholder { color: var(--text3); }
-  #w-lead input:focus {
-    border-color: rgba(16,185,129,.5);
-    box-shadow: 0 0 0 3px rgba(5,150,105,.1);
-  }
-  #w-lead button {
-    background: linear-gradient(135deg, var(--violet2), var(--violet));
-    color: #fff; border: none; border-radius: 10px;
-    padding: 12px; font-size: 13px; font-weight: 600;
-    cursor: pointer; transition: opacity .2s;
-    font-family: 'Space Grotesk', sans-serif;
-    letter-spacing: .01em;
-  }
-  #w-lead button:hover { opacity: .85; }
-
-  #w-msgs {
-    flex: 1; overflow-y: auto; padding: 20px 20px 8px;
-    display: flex; flex-direction: column; gap: 12px;
-  }
-  #w-msgs::-webkit-scrollbar { width: 3px; }
-  #w-msgs::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
-
-  .wm { max-width: 84%; display: flex; flex-direction: column; }
-  .wm.ai { align-self: flex-start; }
-  .wm.user { align-self: flex-end; text-align: right; }
-  .wm-b {
-    padding: 11px 15px; border-radius: 14px;
-    font-size: 13px; line-height: 1.6;
-  }
-  .wm.ai .wm-b {
-    background: var(--glass2); color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 4px 14px 14px 14px;
-  }
-  .wm.user .wm-b {
-    background: linear-gradient(135deg, var(--violet2), var(--violet));
-    color: #fff;
-    border-radius: 14px 4px 14px 14px;
-  }
-  .wm-t { font-size: 10px; color: var(--text3); margin-top: 5px; padding: 0 4px; }
-
-  .typing-dots {
-    display: flex; gap: 5px; align-items: center;
-    padding: 13px 16px;
-  }
-  .typing-dots span {
-    width: 6px; height: 6px;
-    background: var(--border3); border-radius: 50%;
-    animation: td 1.3s infinite;
-  }
-  .typing-dots span:nth-child(2) { animation-delay: .2s; }
-  .typing-dots span:nth-child(3) { animation-delay: .4s; }
-  @keyframes td {
-    0%,100% { transform: translateY(0); opacity: .35; }
-    50% { transform: translateY(-5px); opacity: 1; }
-  }
-
-  #w-input-row {
-    padding: 14px 16px 18px;
-    border-top: 1px solid var(--border);
-    display: flex; gap: 8px;
-  }
-  #w-input-row input {
-    flex: 1; background: var(--glass);
-    border: 1px solid var(--border); color: var(--text);
-    border-radius: 10px; padding: 11px 15px; font-size: 13px;
-    outline: none; font-family: 'Inter', sans-serif; transition: border .2s;
-    backdrop-filter: blur(12px);
-  }
-  #w-input-row input::placeholder { color: var(--text3); }
-  #w-input-row input:focus {
-    border-color: rgba(16,185,129,.4);
-    box-shadow: 0 0 0 3px rgba(5,150,105,.08);
-  }
-  #w-input-row button {
-    background: linear-gradient(135deg, var(--violet2), var(--violet));
-    border: none; color: #fff;
-    border-radius: 10px; width: 42px; flex-shrink: 0;
-    cursor: pointer; font-size: 14px; transition: opacity .2s;
-  }
-  #w-input-row button:hover { opacity: .85; }
 
   /* ─── RESPONSIVE ────────────────────────────────────────────── */
   @media (max-width: 960px) {
@@ -958,8 +796,7 @@
     .proof-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
     .metric-strip { grid-template-columns: repeat(2,1fr); }
-    #widget-panel { right: 12px; bottom: 88px; width: calc(100vw - 24px); }
-    #widget-btn { right: 16px; bottom: 20px; }
+
     .foot-nav { gap: 32px; }
   }
   </style>
@@ -1342,24 +1179,24 @@
           <div class="form-row">
             <div class="form-field">
               <label>First Name</label>
-              <input type="text" placeholder="John" required />
+              <input type="text" id="f-first" placeholder="John" required />
             </div>
             <div class="form-field">
               <label>Last Name</label>
-              <input type="text" placeholder="Smith" required />
+              <input type="text" id="f-last" placeholder="Smith" required />
             </div>
           </div>
           <div class="form-field">
             <label>Business Email</label>
-            <input type="email" placeholder="john@yourbusiness.com" required />
+            <input type="email" id="f-email" placeholder="john@yourbusiness.com" required />
           </div>
           <div class="form-field">
             <label>Phone Number</label>
-            <input type="tel" placeholder="+1 (555) 000-0000" />
+            <input type="tel" id="f-phone" placeholder="+1 (555) 000-0000" />
           </div>
           <div class="form-field">
             <label>Business Type</label>
-            <select required>
+            <select id="f-type" required>
               <option value="" disabled selected>Select your industry</option>
               <option>Real Estate</option>
               <option>Law Firm</option>
@@ -1412,44 +1249,8 @@
   </div>
 </footer>
 
-<!-- CHAT WIDGET -->
-<button id="widget-btn" aria-label="Open chat">
-  <div class="w-notif">1</div>
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
-  </svg>
-</button>
-
-<div id="widget-panel">
-  <div class="w-header">
-    <div class="w-ava">L</div>
-    <div class="w-info">
-      <strong>Levlin Tech AI</strong>
-      <small>Online — replies instantly</small>
-    </div>
-    <button class="w-close" id="w-close">✕</button>
-  </div>
-
-  <div id="w-lead">
-    <p>👋 Hello! Before we start, what's your name?</p>
-    <input type="text" id="l-name" placeholder="Your full name" />
-    <input type="email" id="l-email" placeholder="Email (optional)" />
-    <input type="tel" id="l-phone" placeholder="Phone number (optional)" />
-    <button id="l-start">Start Chatting &rarr;</button>
-  </div>
-
-  <div id="w-msgs" style="display:none;"></div>
-  <div id="w-input-row" style="display:none;">
-    <input type="text" id="w-input" placeholder="Type your message…" autocomplete="off" />
-    <button id="w-send">➤</button>
-  </div>
-</div>
-
 <script>
-  // ── CONFIG — replace with your n8n webhook URL ─────────────────
-  const WEBHOOK_URL = 'https://YOUR-N8N-INSTANCE.com/webhook/YOUR-WEBHOOK-ID';
-
-  // ── Feature card spotlight effect ─────────────────────────────
+  // Feature card spotlight
   document.querySelectorAll('.feat-cell').forEach(cell => {
     cell.addEventListener('mousemove', e => {
       const r = cell.getBoundingClientRect();
@@ -1458,102 +1259,31 @@
     });
   });
 
-  // ── Widget ─────────────────────────────────────────────────────
-  let lead = { name: '', email: '', phone: '' };
-  const btn     = document.getElementById('widget-btn');
-  const panel   = document.getElementById('widget-panel');
-  const cls     = document.getElementById('w-close');
-  const leadDiv = document.getElementById('w-lead');
-  const msgs    = document.getElementById('w-msgs');
-  const iRow    = document.getElementById('w-input-row');
-  const inp     = document.getElementById('w-input');
-  const send    = document.getElementById('w-send');
-  const lStart  = document.getElementById('l-start');
-
-  btn.addEventListener('click', () => {
-    panel.classList.toggle('open');
-    const n = btn.querySelector('.w-notif');
-    if (n) n.remove();
-  });
-  cls.addEventListener('click', () => panel.classList.remove('open'));
-
-  lStart.addEventListener('click', () => {
-    const name = document.getElementById('l-name').value.trim();
-    if (!name) { document.getElementById('l-name').focus(); return; }
-    lead.name  = name;
-    lead.email = document.getElementById('l-email').value.trim();
-    lead.phone = document.getElementById('l-phone').value.trim();
-    leadDiv.style.display = 'none';
-    msgs.style.display    = 'flex';
-    iRow.style.display    = 'flex';
-    addMsg('ai', `Hello ${name} 👋 I'm Levlin Tech, your AI receptionist. How can I help you today?`);
-    inp.focus();
-  });
-
-  async function sendMsg() {
-    const text = inp.value.trim();
-    if (!text) return;
-    inp.value = '';
-    addMsg('user', text);
-    const t = showTyping();
-    try {
-      const res = await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: text,
-          lead,
-          source: 'website_chat',
-          timestamp: new Date().toISOString()
-        })
-      });
-      t.remove();
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      const reply = data.reply || data.message || data.response
-        || (typeof data === 'string' ? data : null)
-        || 'Thank you! A team member will follow up shortly.';
-      addMsg('ai', reply);
-    } catch {
-      t.remove();
-      addMsg('ai', "I'm having a bit of trouble connecting right now. Please try again in a moment.");
-    }
-  }
-
-  send.addEventListener('click', sendMsg);
-  inp.addEventListener('keydown', e => { if (e.key === 'Enter') sendMsg(); });
-
-  function addMsg(role, text) {
-    const m = document.createElement('div');
-    m.className = `wm ${role}`;
-    const b = document.createElement('div');
-    b.className = 'wm-b'; b.textContent = text;
-    const t = document.createElement('span');
-    t.className = 'wm-t';
-    t.textContent = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
-    m.appendChild(b); m.appendChild(t);
-    msgs.appendChild(m);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  function showTyping() {
-    const el = document.createElement('div');
-    el.className = 'wm ai';
-    el.innerHTML = `<div class="wm-b" style="padding:0;background:var(--glass2);border:1px solid var(--border)"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
-    msgs.appendChild(el);
-    msgs.scrollTop = msgs.scrollHeight;
-    return el;
-  }
-
+  // Contact form → /api/lead
+  const API_BASE = 'https://levlin-tech-backend.vercel.app';
   document.getElementById('contact-form').addEventListener('submit', async e => {
     e.preventDefault();
     const b = e.target.querySelector('button[type=submit]');
     b.textContent = 'Sending…'; b.disabled = true;
-    await new Promise(r => setTimeout(r, 1100));
+    try {
+      await fetch(API_BASE + '/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName:    document.getElementById('f-first').value.trim(),
+          lastName:     document.getElementById('f-last').value.trim(),
+          email:        document.getElementById('f-email').value.trim(),
+          phone:        document.getElementById('f-phone').value.trim(),
+          businessType: document.getElementById('f-type').value,
+        })
+      });
+    } catch(_) {}
     b.textContent = '✦ Demo booked — we\'ll be in touch!';
     b.style.background = 'linear-gradient(135deg,#4ade80,#16a34a)';
   });
 </script>
 
+<!-- Levlin AI Chat Widget -->
+<script src="https://levlin-tech-backend.vercel.app/levlin-widget.js"></script>
 </body>
 </html>
