@@ -389,12 +389,37 @@
 
   const isMobile = () => window.innerWidth <= 480;
 
+  function applyViewport() {
+    if (!isMobile()) return;
+    const win = document.getElementById('lvl-window');
+    if (!win) return;
+    const vp = window.visualViewport;
+    if (vp) {
+      win.style.height = vp.height + 'px';
+      win.style.top = vp.offsetTop + 'px';
+      win.style.bottom = 'auto';
+    }
+    scrollBottom();
+  }
+
+  function resetViewport() {
+    const win = document.getElementById('lvl-window');
+    if (!win) return;
+    win.style.height = '';
+    win.style.top = '';
+    win.style.bottom = '';
+  }
+
   function openChat() {
     isOpen = true; clearBadge();
     document.getElementById('lvl-window').classList.add('lvl-open');
     document.getElementById('lvl-launcher').classList.add('lvl-open');
     document.getElementById('lvl-launcher').setAttribute('aria-label', 'Close chat');
-    if (isMobile()) document.body.style.overflow = 'hidden';
+    if (isMobile()) {
+      document.body.style.overflow = 'hidden';
+      applyViewport();
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', applyViewport);
+    }
     setTimeout(() => { document.getElementById('lvl-input')?.focus(); scrollBottom(); }, 50);
   }
 
@@ -404,6 +429,8 @@
     document.getElementById('lvl-launcher').classList.remove('lvl-open');
     document.getElementById('lvl-launcher').setAttribute('aria-label', 'Open chat');
     document.body.style.overflow = '';
+    resetViewport();
+    if (window.visualViewport) window.visualViewport.removeEventListener('resize', applyViewport);
   }
 
   function bindInput() {
