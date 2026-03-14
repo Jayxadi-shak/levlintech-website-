@@ -399,9 +399,16 @@
     const win = document.getElementById('lvl-window');
     if (!win) return;
     const vp = window.visualViewport;
-    const h = vp ? vp.height : window.innerHeight;
-    win.style.height = h + 'px';
-    win.style.top = '0px';
+    if (vp) {
+      // offsetTop handles iOS Safari: when keyboard opens Safari scrolls the
+      // layout viewport, so we must shift the fixed window down by offsetTop
+      // to keep it aligned with the visual viewport.
+      win.style.height = vp.height + 'px';
+      win.style.top = vp.offsetTop + 'px';
+    } else {
+      win.style.height = window.innerHeight + 'px';
+      win.style.top = '0px';
+    }
     win.style.bottom = 'auto';
     scrollBottom();
   }
@@ -424,7 +431,10 @@
       launcher.style.display = 'none';
       document.body.style.overflow = 'hidden';
       applyViewport();
-      if (window.visualViewport) window.visualViewport.addEventListener('resize', applyViewport);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', applyViewport);
+        window.visualViewport.addEventListener('scroll', applyViewport); // iOS fix
+      }
     }
     setTimeout(() => { document.getElementById('lvl-input')?.focus(); scrollBottom(); }, 50);
   }
@@ -438,7 +448,10 @@
     launcher.style.display = '';
     document.body.style.overflow = '';
     resetViewport();
-    if (window.visualViewport) window.visualViewport.removeEventListener('resize', applyViewport);
+    if (window.visualViewport) {
+      window.visualViewport.removeEventListener('resize', applyViewport);
+      window.visualViewport.removeEventListener('scroll', applyViewport);
+    }
   }
 
   function bindInput() {
