@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
+
   <style>
   /* ─── RESET ─────────────────────────────────────────────────── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -860,8 +861,8 @@
         <div class="metric-label">Leads Captured</div>
       </div>
       <div class="metric">
-        <div class="metric-val">$0</div>
-        <div class="metric-label">Setup Fee for First 5 Clients</div>
+        <div class="metric-val">48hr</div>
+        <div class="metric-label">Setup Time</div>
       </div>
     </div>
   </div>
@@ -1250,7 +1251,7 @@
     const b = e.target.querySelector('button[type=submit]');
     b.textContent = 'Sending…'; b.disabled = true;
     try {
-      await fetch(API_BASE + '/api/lead', {
+      const res = await fetch(API_BASE + '/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1261,16 +1262,21 @@
           businessType: document.getElementById('f-type').value,
         })
       });
-    } catch(_) {}
-    // Replace form with success message
-    const form = document.getElementById('contact-form');
-    form.innerHTML = `
-      <div style="text-align:center;padding:40px 20px;">
-        <div style="font-size:48px;margin-bottom:16px;">✅</div>
-        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;color:#fff;margin-bottom:10px;">You're on the list!</h3>
-        <p style="color:rgba(255,255,255,0.55);font-size:15px;line-height:1.6;">We'll reach out within 24 hours to schedule your free 20-minute demo.<br>Check your email for a confirmation.</p>
-      </div>
-    `;
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const form = document.getElementById('contact-form');
+      form.innerHTML = `
+        <div style="text-align:center;padding:40px 20px;">
+          <div style="font-size:48px;margin-bottom:16px;">✔</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;color:#fff;margin-bottom:10px;">You're on the list!</h3>
+          <p style="color:rgba(255,255,255,0.55);font-size:15px;line-height:1.6;">We'll reach out within 24 hours to schedule your free 20-minute demo.<br>Check your email for a confirmation.</p>
+        </div>
+      `;
+    } catch(err) {
+      console.error('Lead form submission failed:', err);
+      b.textContent = 'Something went wrong \u2014 please try again.';
+      b.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
+      b.disabled = false;
+    }
   });
 </script>
 
