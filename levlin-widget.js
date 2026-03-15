@@ -204,7 +204,9 @@
     while ((m = urlRe.exec(text)) !== null) {
       if (last < m.index) container.appendChild(document.createTextNode(text.slice(last, m.index)));
       const a = document.createElement('a');
-      a.href = m[1]; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      const url = m[1];
+      if (!/^https?:\/\//i.test(url)) { container.appendChild(document.createTextNode(url)); last = m.index + m[0].length; continue; }
+      a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
       a.style.cssText = 'color:#34d399;text-decoration:underline;';
       a.textContent = m[1];
       container.appendChild(a);
@@ -349,11 +351,15 @@
         if (isOpen) return;
         const tip = document.createElement('div');
         tip.id = 'lvl-tooltip';
-        tip.innerHTML = 'Have a question about our AI receptionist? Chat with us! <button id="lvl-tooltip-close">\u2715</button>';
+        tip.appendChild(document.createTextNode('Have a question about our AI receptionist? Chat with us! '));
+        const closeBtn = document.createElement('button');
+        closeBtn.id = 'lvl-tooltip-close';
+        closeBtn.textContent = '\u2715';
+        tip.appendChild(closeBtn);
         document.body.appendChild(tip);
         requestAnimationFrame(() => requestAnimationFrame(() => tip.classList.add('lvl-show')));
         const dismiss = () => { tip.classList.remove('lvl-show'); sessionStorage.setItem('lvl_tooltip_seen', '1'); setTimeout(() => tip.remove(), 300); };
-        document.getElementById('lvl-tooltip-close').addEventListener('click', dismiss);
+        closeBtn.addEventListener('click', dismiss);
         setTimeout(dismiss, 8000);
       }, 4000);
     }

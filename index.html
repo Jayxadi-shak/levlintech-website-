@@ -58,6 +58,56 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
+  /* ─── PRO ANIMATIONS ───────────────────────────────────────── */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes gradient-rotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    @keyframes float { 0%, 100% { transform: none; } }
+    @keyframes shimmer { 0%, 100% { background-position: 0; } }
+    @keyframes gradient-rotate { 0%, 100% { background-position: 0% 50%; } }
+    @keyframes glow-pulse { 0%, 100% { opacity: 0.4; } }
+    @keyframes slide-up { from, to { opacity: 1; transform: none; } }
+    @keyframes scale-in { from, to { opacity: 1; transform: none; } }
+  }
+
+  /* ─── PRO SECTION DIVIDERS ─────────────────────────────────── */
+  .section-glow {
+    position: relative;
+  }
+  .section-glow::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--violet2), transparent);
+    opacity: 0.4;
+  }
+
   /* ─── UTILITIES ─────────────────────────────────────────────── */
   .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
   section { padding: 120px 0; }
@@ -88,11 +138,25 @@
   .btn-primary {
     background: #fff;
     color: #000;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(16,185,129,0.15), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease-in-out infinite;
+    pointer-events: none;
   }
   .btn-primary:hover {
     background: rgba(255,255,255,.88);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 28px rgba(255,255,255,.12);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(255,255,255,.15), 0 0 40px rgba(16,185,129,.1);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+    transition-duration: .08s;
   }
   .btn-ghost {
     background: var(--glass);
@@ -109,10 +173,24 @@
     background: linear-gradient(135deg, var(--violet2), var(--violet));
     color: #fff;
     box-shadow: 0 4px 20px rgba(5,150,105,.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-violet::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2.5s ease-in-out infinite;
+    pointer-events: none;
   }
   .btn-violet:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 36px rgba(5,150,105,.5);
+    box-shadow: 0 10px 36px rgba(5,150,105,.5), 0 0 60px rgba(16,185,129,.15);
+  }
+  .btn-violet:active {
+    transform: translateY(0);
+    transition-duration: .08s;
   }
 
   .sh { text-align: center; margin-bottom: 80px; }
@@ -166,8 +244,14 @@
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 900;
     border-bottom: 1px solid var(--border);
-    background: rgba(0,0,0,.75);
+    background: rgba(0,0,0,.65);
     backdrop-filter: blur(20px) saturate(1.5);
+    transition: background .3s, border-color .3s, box-shadow .3s;
+  }
+  nav.scrolled {
+    background: rgba(0,0,0,.92);
+    border-bottom-color: var(--border2);
+    box-shadow: 0 4px 30px rgba(0,0,0,.5);
   }
   .nav-wrap {
     max-width: var(--max); margin: 0 auto; padding: 0 24px;
@@ -211,18 +295,21 @@
     width: 700px; height: 700px;
     top: -200px; left: -100px;
     background: radial-gradient(circle, #0d9488, transparent 70%);
+    animation: float 12s ease-in-out infinite;
   }
   .mesh-blob.b {
     width: 600px; height: 600px;
     top: -100px; right: -150px;
     background: radial-gradient(circle, #059669, transparent 70%);
     opacity: .25;
+    animation: float 16s ease-in-out infinite reverse;
   }
   .mesh-blob.c {
     width: 400px; height: 400px;
     bottom: -100px; left: 30%;
     background: radial-gradient(circle, #34d399, transparent 70%);
     opacity: .12;
+    animation: float 20s ease-in-out infinite 2s;
   }
 
   /* dot grid */
@@ -234,7 +321,10 @@
     -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
   }
 
-  #hero .container { position: relative; z-index: 1; text-align: center; }
+  #hero .container {
+    position: relative; z-index: 1; text-align: center;
+    animation: slide-up 0.8s ease-out;
+  }
 
   .hero-live-badge {
     display: inline-flex; align-items: center; gap: 8px;
@@ -301,10 +391,16 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 40px; font-weight: 700;
     letter-spacing: -.04em;
-    background: linear-gradient(135deg, #fff, rgba(255,255,255,.7));
+    background: linear-gradient(135deg, #fff 30%, var(--violet2) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1; margin-bottom: 8px;
+  }
+  .metric {
+    transition: background .25s;
+  }
+  .metric:hover {
+    background: rgba(16,185,129,0.03);
   }
   .metric-label { font-size: 12px; color: var(--text3); letter-spacing: .06em; text-transform: uppercase; }
 
@@ -353,6 +449,14 @@
   .tl-item:hover {
     border-color: var(--border2);
     box-shadow: 0 8px 40px rgba(0,0,0,.5);
+    transform: translateX(4px);
+  }
+  .tl-item .tl-num {
+    transition: background .25s, color .25s;
+  }
+  .tl-item:hover .tl-num {
+    background: rgba(16,185,129,0.08);
+    color: var(--violet2);
   }
   .tl-num {
     background: var(--glass2);
@@ -419,6 +523,13 @@
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 20px; margin-bottom: 20px;
+    transition: all .3s ease;
+  }
+  .feat-cell:hover .feat-icon-wrap {
+    background: rgba(16,185,129,0.1);
+    border-color: rgba(16,185,129,0.3);
+    box-shadow: 0 0 20px rgba(16,185,129,0.15);
+    transform: scale(1.05);
   }
   .feat-cell h3 {
     font-size: 16px; font-weight: 600;
@@ -492,8 +603,14 @@
   .price-card.featured {
     background: linear-gradient(var(--bg1), var(--bg1)) padding-box,
                 linear-gradient(135deg, var(--violet2), var(--indigo), var(--cyan), var(--violet2)) border-box;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     box-shadow: 0 0 60px rgba(5,150,105,.15), 0 24px 60px rgba(0,0,0,.5);
+    background-size: 100% 100%, 300% 300%;
+    animation: gradient-rotate 6s ease infinite;
+  }
+  .price-card.featured:hover {
+    box-shadow: 0 0 80px rgba(5,150,105,.25), 0 32px 80px rgba(0,0,0,.6);
+    transform: translateY(-6px) scale(1.01);
   }
   .feat-label {
     position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
@@ -580,7 +697,17 @@
     box-shadow:
       0 0 0 1px rgba(255,255,255,.04),
       0 32px 80px rgba(0,0,0,.7),
+      0 0 80px rgba(16,185,129,.08),
       inset 0 1px 0 rgba(255,255,255,.06);
+    transition: transform .4s ease, box-shadow .4s ease;
+  }
+  .phone:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.06),
+      0 40px 100px rgba(0,0,0,.8),
+      0 0 120px rgba(16,185,129,.12),
+      inset 0 1px 0 rgba(255,255,255,.08);
   }
   .phone-notch {
     width: 100px; height: 28px; background: var(--bg);
@@ -1027,7 +1154,7 @@
 </section>
 
 <!-- HOW IT WORKS -->
-<section id="how-it-works">
+<section id="how-it-works" class="section-glow">
   <div class="container">
     <div class="sh reveal">
       <span class="tag"><span class="dot"></span>How It Works</span>
@@ -1072,7 +1199,7 @@
 </section>
 
 <!-- FEATURES -->
-<section id="features">
+<section id="features" class="section-glow">
   <div class="container">
     <div class="sh reveal">
       <span class="tag"><span class="dot"></span>Features</span>
@@ -1142,7 +1269,7 @@
 </section>
 
 <!-- PRICING -->
-<section id="pricing">
+<section id="pricing" class="section-glow">
   <div class="container">
     <div class="sh reveal">
       <span class="tag"><span class="dot"></span>Pricing</span>
@@ -1463,6 +1590,14 @@
     if (phoneMsgs) phoneObserver.observe(phoneMsgs);
   }
 
+  // ── Nav Scroll Effect ──
+  const navEl = document.querySelector('nav');
+  if (navEl) {
+    window.addEventListener('scroll', () => {
+      navEl.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+  }
+
   // ── Hamburger Menu ──
   const hamburger = document.querySelector('.nav-hamburger');
   const navLinks = document.querySelector('.nav-links');
@@ -1550,15 +1685,22 @@
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const form = document.getElementById('contact-form');
-      form.innerHTML = `
-        <div style="text-align:center;padding:40px 20px;">
-          <div class="success-check">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;color:#fff;margin-bottom:10px;">You're on the list!</h3>
-          <p style="color:rgba(255,255,255,0.55);font-size:15px;line-height:1.6;">We'll reach out within 24 hours to schedule your free 20-minute demo.<br>Check your email for a confirmation.</p>
-        </div>
-      `;
+      while (form.firstChild) form.removeChild(form.firstChild);
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = 'text-align:center;padding:40px 20px;';
+      const checkDiv = document.createElement('div');
+      checkDiv.className = 'success-check';
+      checkDiv.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      const h3 = document.createElement('h3');
+      h3.style.cssText = "font-family:'Space Grotesk',sans-serif;font-size:22px;color:#fff;margin-bottom:10px;";
+      h3.textContent = "You're on the list!";
+      const p = document.createElement('p');
+      p.style.cssText = 'color:rgba(255,255,255,0.55);font-size:15px;line-height:1.6;';
+      p.textContent = "We'll reach out within 24 hours to schedule your free 20-minute demo. Check your email for a confirmation.";
+      wrapper.appendChild(checkDiv);
+      wrapper.appendChild(h3);
+      wrapper.appendChild(p);
+      form.appendChild(wrapper);
     } catch(err) {
       console.error('Lead form submission failed:', err);
       b.classList.remove('btn-loading');
