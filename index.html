@@ -800,7 +800,144 @@
     .metric-strip { grid-template-columns: repeat(2,1fr); }
 
     .foot-nav { gap: 32px; }
+    #hero { min-height: auto; padding: 80px 0 48px; }
+    #hero h1 { font-size: clamp(32px, 8vw, 48px); }
+    .hero-cta { flex-direction: column; }
+    .hero-cta .btn { width: 100%; justify-content: center; }
+    .metric { padding: 20px 16px; }
+    .metric-val { font-size: 28px; }
+    section { padding: 80px 0; }
+    .tag, .brand-chip, .contact-form input, .contact-form select {
+      backdrop-filter: none; -webkit-backdrop-filter: none;
+    }
   }
+
+  /* ─── ACCESSIBILITY ─────────────────────────────────────────── */
+  *:focus-visible {
+    outline: 2px solid var(--violet2);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ─── SCROLL REVEAL ─────────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.35s; }
+  .reveal-delay-5 { transition-delay: 0.4s; }
+  .reveal-delay-6 { transition-delay: 0.45s; }
+
+  /* ─── HAMBURGER MENU ────────────────────────────────────────── */
+  .nav-hamburger {
+    display: none;
+    width: 44px; height: 44px;
+    background: none; border: none; cursor: pointer;
+    flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+    padding: 0; z-index: 1001;
+  }
+  .nav-hamburger span {
+    display: block; width: 20px; height: 2px;
+    background: var(--text2); border-radius: 2px;
+    transition: transform 0.25s, opacity 0.25s;
+  }
+  .nav-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 640px) {
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.96); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 32px; z-index: 1000;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { font-size: 20px; color: #fff; }
+  }
+
+  /* ─── SECTION GLOW ──────────────────────────────────────────── */
+  .sh::before {
+    content: '';
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px; height: 200px;
+    background: radial-gradient(ellipse, rgba(16,185,129,0.04), transparent 70%);
+    pointer-events: none; z-index: -1;
+  }
+  .sh { position: relative; }
+
+  /* ─── BUTTON MICRO-INTERACTIONS ─────────────────────────────── */
+  .btn:active { transform: scale(0.97); }
+  .btn-violet:active { transform: scale(0.97); box-shadow: 0 2px 12px rgba(5,150,105,.25); }
+  .btn-loading {
+    pointer-events: none; opacity: 0.8;
+  }
+  .btn-loading::after {
+    content: ''; display: inline-block;
+    width: 14px; height: 14px; margin-left: 8px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff; border-radius: 50%;
+    animation: btn-spin 0.6s linear infinite;
+  }
+  @keyframes btn-spin { to { transform: rotate(360deg); } }
+
+  /* ─── FORM VALIDATION ───────────────────────────────────────── */
+  .form-field.error input,
+  .form-field.error select {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+  }
+  .form-field.success input,
+  .form-field.success select {
+    border-color: rgba(16,185,129,0.5);
+  }
+  .form-error {
+    font-size: 11px; color: #ef4444; margin-top: 4px;
+    display: none; font-family: 'Inter', sans-serif;
+  }
+  .form-field.error .form-error { display: block; }
+
+  /* ─── PHONE MOCKUP ANIMATION ───────────────────────────────── */
+  .pm { opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+  .pm.pm-visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── FLOATING PARTICLES ────────────────────────────────────── */
+  .particle {
+    position: absolute; border-radius: 50%;
+    background: var(--violet2); pointer-events: none;
+    opacity: 0; animation: float-particle linear infinite;
+  }
+  @keyframes float-particle {
+    0%   { opacity: 0; transform: translateY(0) translateX(0); }
+    10%  { opacity: 0.15; }
+    90%  { opacity: 0.15; }
+    100% { opacity: 0; transform: translateY(-200px) translateX(40px); }
+  }
+
+  /* ─── SUCCESS ANIMATION ─────────────────────────────────────── */
+  .success-check {
+    width: 64px; height: 64px; margin: 0 auto 16px;
+    border-radius: 50%; background: linear-gradient(135deg, var(--violet2), var(--violet));
+    display: flex; align-items: center; justify-content: center;
+    animation: success-pop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes success-pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
   </style>
 </head>
 <body>
@@ -815,6 +952,9 @@
       <a href="#pricing">Pricing</a>
       <a href="#demo">Demo</a>
     </div>
+    <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
     <a href="#contact" class="btn btn-ghost" style="padding:9px 20px;font-size:13px;">Book a Demo</a>
   </div>
 </nav>
@@ -825,6 +965,11 @@
     <div class="mesh-blob a"></div>
     <div class="mesh-blob b"></div>
     <div class="mesh-blob c"></div>
+    <div class="particle" style="width:4px;height:4px;left:15%;top:30%;animation-duration:18s;animation-delay:0s;"></div>
+    <div class="particle" style="width:3px;height:3px;left:70%;top:50%;animation-duration:22s;animation-delay:3s;"></div>
+    <div class="particle" style="width:5px;height:5px;left:40%;top:70%;animation-duration:16s;animation-delay:6s;"></div>
+    <div class="particle" style="width:3px;height:3px;left:85%;top:25%;animation-duration:20s;animation-delay:2s;"></div>
+    <div class="particle" style="width:4px;height:4px;left:25%;top:60%;animation-duration:24s;animation-delay:8s;"></div>
   </div>
   <div class="dot-grid"></div>
   <div class="container">
@@ -847,7 +992,7 @@
       <a href="#demo" class="btn btn-ghost">See It Live</a>
     </div>
 
-    <div class="metric-strip">
+    <div class="metric-strip reveal">
       <div class="metric">
         <div class="metric-val">24/7</div>
         <div class="metric-label">Always On</div>
@@ -884,13 +1029,13 @@
 <!-- HOW IT WORKS -->
 <section id="how-it-works">
   <div class="container">
-    <div class="sh">
+    <div class="sh reveal">
       <span class="tag"><span class="dot"></span>How It Works</span>
       <h2>Live in 48 hours.<br><span class="g-text">No tech skills needed.</span></h2>
       <p>We handle everything — setup, training, and ongoing management. You just answer when we send you a hot lead.</p>
     </div>
     <div class="timeline" style="gap:2px;">
-      <div class="tl-item">
+      <div class="tl-item reveal reveal-delay-1">
         <div class="tl-num">01</div>
         <div class="tl-body">
           <span class="tl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
@@ -898,7 +1043,7 @@
           <p>A 30-minute call where we learn your services, pricing, hours, and how you talk to customers. We build your AI to sound like your best employee.</p>
         </div>
       </div>
-      <div class="tl-item" style="margin-top:2px;">
+      <div class="tl-item reveal reveal-delay-2" style="margin-top:2px;">
         <div class="tl-num">02</div>
         <div class="tl-body">
           <span class="tl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
@@ -906,7 +1051,7 @@
           <p>We set up your AI receptionist, train it on your business, connect it to your phone and website, and test it until it's perfect. You do nothing.</p>
         </div>
       </div>
-      <div class="tl-item" style="margin-top:2px;">
+      <div class="tl-item reveal reveal-delay-3" style="margin-top:2px;">
         <div class="tl-num">03</div>
         <div class="tl-body">
           <span class="tl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
@@ -914,7 +1059,7 @@
           <p>When someone calls or chats, the AI answers instantly, handles their question, captures their info, and sends you a text or email with the full details.</p>
         </div>
       </div>
-      <div class="tl-item" style="margin-top:2px;">
+      <div class="tl-item reveal reveal-delay-4" style="margin-top:2px;">
         <div class="tl-num">04</div>
         <div class="tl-body">
           <span class="tl-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
@@ -929,42 +1074,42 @@
 <!-- FEATURES -->
 <section id="features">
   <div class="container">
-    <div class="sh">
+    <div class="sh reveal">
       <span class="tag"><span class="dot"></span>Features</span>
       <h2>Everything a front desk does.<br><span class="v-text">Nothing you have to manage.</span></h2>
     </div>
     <div class="feat-grid">
-      <div class="feat-cell">
+      <div class="feat-cell reveal reveal-delay-1">
         <span class="feat-num">01</span>
         <div class="feat-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
         <h3>AI Phone Receptionist</h3>
         <p>Answers every call in under 2 seconds. Handles FAQs, books appointments, takes messages, and routes urgent calls to you.</p>
       </div>
-      <div class="feat-cell">
+      <div class="feat-cell reveal reveal-delay-2">
         <span class="feat-num">02</span>
         <div class="feat-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
         <h3>AI Website Chat</h3>
         <p>A smart chat widget on your website that qualifies visitors, answers questions from your actual business info, and captures contact details.</p>
       </div>
-      <div class="feat-cell">
+      <div class="feat-cell reveal reveal-delay-3">
         <span class="feat-num">03</span>
         <div class="feat-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
         <h3>Automatic Lead Capture</h3>
         <p>Every caller and visitor gets logged — name, phone, email, and what they need. No lead falls through the cracks.</p>
       </div>
-      <div class="feat-cell">
+      <div class="feat-cell reveal reveal-delay-4">
         <span class="feat-num">04</span>
         <div class="feat-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
         <h3>Real-Time Alerts</h3>
         <p>Get a text or email the moment a new lead comes in. Full conversation context included so you can follow up fast.</p>
       </div>
-      <div class="feat-cell">
+      <div class="feat-cell reveal reveal-delay-5">
         <span class="feat-num">05</span>
         <div class="feat-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></div>
         <h3>Trained on Your Business</h3>
         <p>Not a generic bot. Your AI knows your services, pricing, hours, service area, and brand voice. It answers like you would.</p>
       </div>
-      <div class="feat-cell">
+      <div class="feat-cell reveal reveal-delay-6">
         <span class="feat-num">06</span>
         <div class="feat-icon-wrap"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" aria-hidden="true" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
         <h3>Lead Dashboard</h3>
@@ -982,13 +1127,13 @@
       <p>Limited spots at launch pricing — 30-day money-back guarantee on every plan.</p>
     </div>
     <div class="proof-grid">
-      <div class="proof-card" style="display:flex;align-items:center;justify-content:center;">
+      <div class="proof-card reveal reveal-delay-1" style="display:flex;align-items:center;justify-content:center;">
         <p style="font-size:15px;color:var(--text2);line-height:1.7;text-align:center;">Real estate agents in Omaha seeing results in week one</p>
       </div>
-      <div class="proof-card" style="display:flex;align-items:center;justify-content:center;">
+      <div class="proof-card reveal reveal-delay-2" style="display:flex;align-items:center;justify-content:center;">
         <p style="font-size:15px;color:var(--text2);line-height:1.7;text-align:center;">Home service companies capturing after-hours leads automatically</p>
       </div>
-      <div class="proof-card" style="display:flex;align-items:center;justify-content:center;">
+      <div class="proof-card reveal reveal-delay-3" style="display:flex;align-items:center;justify-content:center;">
         <p style="font-size:15px;color:var(--text2);line-height:1.7;text-align:center;">Law firms reducing missed intake calls by 80%+</p>
       </div>
     </div>
@@ -999,7 +1144,7 @@
 <!-- PRICING -->
 <section id="pricing">
   <div class="container">
-    <div class="sh">
+    <div class="sh reveal">
       <span class="tag"><span class="dot"></span>Pricing</span>
       <h2>Simple pricing.<br><span class="g-text">Pays for itself with one lead.</span></h2>
       <p>No contracts. Cancel anytime. 30-day money-back guarantee on every plan.</p>
@@ -1008,7 +1153,7 @@
       </div>
     </div>
     <div class="price-grid">
-      <div class="price-card">
+      <div class="price-card reveal reveal-delay-1">
         <div class="price-tier">Starter</div>
         <div class="price-name">Starter</div>
         <div class="price-amount"><strong>$299</strong><span>/mo</span></div>
@@ -1027,7 +1172,7 @@
         <a href="#contact" class="btn btn-ghost">Get Started</a>
       </div>
 
-      <div class="price-card featured">
+      <div class="price-card featured reveal reveal-delay-2">
         <div class="feat-label">Most Popular</div>
         <div class="price-tier">Growth</div>
         <div class="price-name">Growth</div>
@@ -1046,7 +1191,7 @@
         <a href="#contact" class="btn btn-violet">Get Started</a>
       </div>
 
-      <div class="price-card">
+      <div class="price-card reveal reveal-delay-3">
         <div class="price-tier">Premium</div>
         <div class="price-name">Premium</div>
         <div class="price-amount"><strong>$999</strong><span>/mo</span></div>
@@ -1072,7 +1217,7 @@
 <section id="demo">
   <div class="container">
     <div class="demo-grid">
-      <div class="demo-copy">
+      <div class="demo-copy reveal">
         <span class="tag"><span class="dot"></span>Live Demo</span>
         <h2>See Levlin in action<br><em style="font-style:normal;background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">right now.</em></h2>
         <p>Click the chat icon in the bottom corner and try it. This is exactly what your customers experience.</p>
@@ -1097,7 +1242,7 @@
         <a href="#contact" class="btn btn-primary">Deploy on My Website &rarr;</a>
       </div>
 
-      <div class="phone-wrap">
+      <div class="phone-wrap reveal reveal-delay-2">
         <div class="phone">
           <div class="phone-notch">
             <div class="notch-cam"></div>
@@ -1137,7 +1282,7 @@
     <div class="cta-mesh-b b"></div>
   </div>
   <div class="container">
-    <div class="cta-inner">
+    <div class="cta-inner reveal">
       <h2>Stop losing money to<br><em style="font-style:normal;background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">missed calls.</em></h2>
       <p>Every unanswered call is revenue walking to your competitor. Levlin makes sure that never happens — starting this week.</p>
       <div class="cta-btns">
@@ -1152,7 +1297,7 @@
 <section id="contact">
   <div class="container">
     <div class="contact-wrap">
-      <div class="contact-left">
+      <div class="contact-left reveal">
         <span class="tag" style="margin-bottom:24px;display:inline-flex;"><span class="dot"></span>Book a Demo</span>
         <h2>Book your<br>free demo.</h2>
         <p>A 20-minute call where we show you exactly how Levlin works for your type of business. No pressure. No sales pitch.</p>
@@ -1163,25 +1308,29 @@
           <li><span class="perk-dot"></span>No contracts — cancel anytime</li>
         </ul>
       </div>
-      <div class="contact-form-box">
+      <div class="contact-form-box reveal reveal-delay-1">
         <form class="contact-form" id="contact-form">
           <div class="form-row">
             <div class="form-field">
               <label>First Name</label>
               <input type="text" id="f-first" placeholder="John" required />
+              <span class="form-error" role="alert">Required</span>
             </div>
             <div class="form-field">
               <label>Last Name</label>
               <input type="text" id="f-last" placeholder="Smith" required />
+              <span class="form-error" role="alert">Required</span>
             </div>
           </div>
           <div class="form-field">
             <label>Business Email</label>
             <input type="email" id="f-email" placeholder="john@yourbusiness.com" required />
+            <span class="form-error" role="alert">Please enter a valid email</span>
           </div>
           <div class="form-field">
             <label>Phone Number</label>
             <input type="tel" id="f-phone" placeholder="+1 (555) 000-0000" />
+            <span class="form-error" role="alert">Required</span>
           </div>
           <div class="form-field">
             <label>Business Type</label>
@@ -1193,6 +1342,7 @@
               <option>Insurance</option>
               <option>Other</option>
             </select>
+            <span class="form-error" role="alert">Please select your industry</span>
           </div>
           <button type="submit" class="btn btn-violet">Reserve My Demo Spot &rarr;</button>
         </form>
@@ -1235,7 +1385,7 @@
 </footer>
 
 <script>
-  // Feature card spotlight
+  // ── Feature card spotlight ──
   document.querySelectorAll('.feat-cell').forEach(cell => {
     cell.addEventListener('mousemove', e => {
       const r = cell.getBoundingClientRect();
@@ -1244,12 +1394,148 @@
     });
   });
 
-  // Contact form → /api/lead
+  // ── Scroll Reveal (IntersectionObserver) ──
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+
+  // ── Metric Counter Animation ──
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function countUp(el, target, suffix, duration, prefix) {
+    prefix = prefix || '';
+    if (reducedMotion) { el.textContent = prefix + target + suffix; return; }
+    const start = performance.now();
+    const update = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = prefix + Math.floor(target * eased) + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+
+  if ('IntersectionObserver' in window) {
+    const metricObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const vals = entry.target.querySelectorAll('.metric-val');
+          vals.forEach(v => {
+            const text = v.textContent.trim();
+            if (text === '24/7') return; // skip — not a number
+            if (text === '<2s') { countUp(v, 2, 's', 800, '<'); }
+            else if (text === '100%') countUp(v, 100, '%', 1200);
+            else if (text === '48hr') countUp(v, 48, 'hr', 1000);
+          });
+          metricObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    const strip = document.querySelector('.metric-strip');
+    if (strip) metricObserver.observe(strip);
+  }
+
+  // ── Phone Mockup Animation ──
+  if ('IntersectionObserver' in window) {
+    const phoneObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const msgs = entry.target.querySelectorAll('.pm');
+          msgs.forEach((m, i) => {
+            if (reducedMotion) m.classList.add('pm-visible');
+            else setTimeout(() => m.classList.add('pm-visible'), i * 500);
+          });
+          phoneObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    const phoneMsgs = document.querySelector('.phone-msgs');
+    if (phoneMsgs) phoneObserver.observe(phoneMsgs);
+  }
+
+  // ── Hamburger Menu ──
+  const hamburger = document.querySelector('.nav-hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  if (hamburger && navLinks) {
+    const closeMenu = () => {
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    hamburger.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      hamburger.classList.toggle('active');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      if (isOpen) navLinks.querySelector('a')?.focus();
+    });
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) closeMenu();
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 640 && navLinks.classList.contains('open')) closeMenu();
+    });
+  }
+
+  // ── Form Validation ──
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const PHONE_RE = /^\+?[\d\s\-()]{7,}$/;
+
+  function validateField(field) {
+    const wrapper = field.closest('.form-field');
+    if (!wrapper) return true;
+    let valid = true;
+
+    if (field.required && !field.value.trim()) {
+      valid = false;
+    } else if (field.type === 'email' && field.value && !EMAIL_RE.test(field.value.trim())) {
+      valid = false;
+    } else if (field.type === 'tel' && field.value && !PHONE_RE.test(field.value.trim())) {
+      valid = false;
+    } else if (field.tagName === 'SELECT' && field.required && !field.value) {
+      valid = false;
+    }
+
+    wrapper.classList.toggle('error', !valid);
+    wrapper.classList.toggle('success', valid && field.value.trim() !== '');
+    return valid;
+  }
+
+  document.querySelectorAll('#contact-form input, #contact-form select').forEach(field => {
+    field.addEventListener('blur', () => validateField(field));
+    field.addEventListener('input', () => {
+      const wrapper = field.closest('.form-field');
+      if (wrapper && wrapper.classList.contains('error')) validateField(field);
+    });
+  });
+
+  // ── Contact Form Submission ──
   const API_BASE = 'https://levlin-tech-backend.vercel.app';
   document.getElementById('contact-form').addEventListener('submit', async e => {
     e.preventDefault();
+    const fields = e.target.querySelectorAll('input, select');
+    let allValid = true;
+    fields.forEach(f => { if (!validateField(f)) allValid = false; });
+    if (!allValid) return;
+
     const b = e.target.querySelector('button[type=submit]');
-    b.textContent = 'Sending…'; b.disabled = true;
+    b.classList.add('btn-loading');
+    b.textContent = 'Sending';
+    b.disabled = true;
     try {
       const res = await fetch(API_BASE + '/api/lead', {
         method: 'POST',
@@ -1266,13 +1552,16 @@
       const form = document.getElementById('contact-form');
       form.innerHTML = `
         <div style="text-align:center;padding:40px 20px;">
-          <div style="font-size:48px;margin-bottom:16px;">✔</div>
+          <div class="success-check">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
           <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;color:#fff;margin-bottom:10px;">You're on the list!</h3>
           <p style="color:rgba(255,255,255,0.55);font-size:15px;line-height:1.6;">We'll reach out within 24 hours to schedule your free 20-minute demo.<br>Check your email for a confirmation.</p>
         </div>
       `;
     } catch(err) {
       console.error('Lead form submission failed:', err);
+      b.classList.remove('btn-loading');
       b.textContent = 'Something went wrong \u2014 please try again.';
       b.style.background = 'linear-gradient(135deg,#ef4444,#dc2626)';
       b.disabled = false;
@@ -1281,6 +1570,6 @@
 </script>
 
 <!-- Levlin AI Chat Widget -->
-<script src="./levlin-widget.js"></script>
+<script src="./levlin-widget.js" defer></script>
 </body>
 </html>

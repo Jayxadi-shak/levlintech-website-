@@ -48,7 +48,7 @@
     #lvl-window { position: fixed; bottom: 96px; right: 24px; width: 368px; max-width: calc(100vw - 32px); height: 540px; max-height: calc(100vh - 120px); background: rgba(10, 10, 10, 0.92); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); border: 1px solid rgba(16, 185, 129, 0.18); border-radius: 20px; box-shadow: 0 0 0 1px rgba(255,255,255,0.04) inset, 0 24px 64px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.4), 0 0 40px rgba(5,150,105,0.08); display: flex; flex-direction: column; overflow: hidden; z-index: 2147483645; opacity: 0; transform: translateY(16px) scale(0.97); pointer-events: none; transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1); font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
     #lvl-window.lvl-open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
 
-    #lvl-header { background: linear-gradient(135deg, rgba(5,150,105,0.3) 0%, rgba(13,148,136,0.2) 100%); border-bottom: 1px solid rgba(16, 185, 129, 0.15); padding: 16px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; position: relative; overflow: hidden; }
+    #lvl-header { background: linear-gradient(135deg, rgba(5,150,105,0.3) 0%, rgba(13,148,136,0.2) 100%); border-bottom: 1px solid rgba(16, 185, 129, 0.15); padding: 16px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; position: relative; overflow: hidden; background-size: 200% 200%; animation: lvl-header-glow 8s ease infinite; }
     #lvl-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 0 16px rgba(16,185,129,0.4); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     #lvl-avatar svg { width: 22px; height: 22px; fill: #fff; }
     #lvl-header-text { flex: 1; }
@@ -77,6 +77,10 @@
     #lvl-typing span:nth-child(2) { animation-delay: 0.15s; }
     #lvl-typing span:nth-child(3) { animation-delay: 0.3s; }
     @keyframes lvl-bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
+    @keyframes lvl-header-glow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
 
     #lvl-footer { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.06); background: rgba(0,0,0,0.3); display: flex; align-items: flex-end; gap: 10px; flex-shrink: 0; }
     #lvl-input { flex: 1; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 10px 14px; font-size: 14px; font-family: inherit; line-height: 1.4; resize: none; outline: none; color: #e2e8f0; background: rgba(255,255,255,0.05); max-height: 120px; overflow-y: auto; transition: border-color 0.2s, background 0.2s; }
@@ -96,6 +100,27 @@
     #lvl-close-btn:hover { background: rgba(255,255,255,0.14); }
     #lvl-close-btn svg { width: 18px; height: 18px; fill: rgba(255,255,255,0.8); }
 
+    #lvl-tooltip {
+      position: fixed; bottom: 90px; right: 24px;
+      max-width: 260px; padding: 14px 18px;
+      background: rgba(10,10,10,0.95);
+      border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 14px; border-bottom-right-radius: 4px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 13px; color: #e2e8f0; line-height: 1.5;
+      z-index: 2147483644;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+    #lvl-tooltip.lvl-show { opacity: 1; transform: translateY(0); pointer-events: all; }
+    #lvl-tooltip-close {
+      position: absolute; top: 6px; right: 8px;
+      background: none; border: none; color: rgba(255,255,255,0.4);
+      cursor: pointer; font-size: 14px; padding: 4px;
+    }
+
     @media (max-width: 480px) {
       #lvl-window { bottom: 0; right: 0; left: 0; width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh; border-radius: 0; border: none; background: #0a0a0a; backdrop-filter: none; -webkit-backdrop-filter: none; }
       #lvl-launcher { bottom: 20px; right: 20px; }
@@ -106,6 +131,7 @@
       #lvl-send { width: 46px; height: 46px; }
       #lvl-footer { padding: 10px 12px; padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
       .lvl-bubble { font-size: 15px; padding: 11px 15px; }
+      #lvl-tooltip { display: none !important; }
     }
   `;
 
@@ -119,7 +145,7 @@
   const loadHistory = () => { try { const r = sessionStorage.getItem(STORAGE_KEY); return r ? JSON.parse(r) : []; } catch(_) { return []; } };
   const saveHistory = (m) => { try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(m.slice(-40))); } catch(_) {} };
   const formatTime  = (ts) => new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  const esc         = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  // HTML escaping handled via DOM text nodes in linkify() — no string injection
 
   function injectStyles() {
     if (!document.querySelector('link[href*="Space+Grotesk"]')) {
@@ -172,10 +198,32 @@
     document.body.appendChild(win);
   }
 
+  function linkify(container, text) {
+    const urlRe = /(https?:\/\/[^\s]+)/g;
+    let last = 0, m;
+    while ((m = urlRe.exec(text)) !== null) {
+      if (last < m.index) container.appendChild(document.createTextNode(text.slice(last, m.index)));
+      const a = document.createElement('a');
+      a.href = m[1]; a.target = '_blank'; a.rel = 'noopener noreferrer';
+      a.style.cssText = 'color:#34d399;text-decoration:underline;';
+      a.textContent = m[1];
+      container.appendChild(a);
+      last = m.index + m[0].length;
+    }
+    if (last < text.length) container.appendChild(document.createTextNode(text.slice(last)));
+  }
+
   function appendMessage(role, text, ts) {
     const el = document.createElement('div');
     el.className = `lvl-msg lvl-${role}`;
-    el.innerHTML = `<div class="lvl-bubble">${esc(text).replace(/\n/g,'<br>')}</div><div class="lvl-time">${formatTime(ts||Date.now())}</div>`;
+    const bubble = document.createElement('div');
+    bubble.className = 'lvl-bubble';
+    linkify(bubble, text);
+    const time = document.createElement('div');
+    time.className = 'lvl-time';
+    time.textContent = formatTime(ts || Date.now());
+    el.appendChild(bubble);
+    el.appendChild(time);
     document.getElementById('lvl-messages').insertBefore(el, document.getElementById('lvl-typing'));
     scrollBottom();
   }
@@ -243,6 +291,8 @@
 
   function openChat() {
     isOpen = true; clearBadge();
+    const tip = document.getElementById('lvl-tooltip');
+    if (tip) { tip.classList.remove('lvl-show'); sessionStorage.setItem('lvl_tooltip_seen', '1'); setTimeout(() => tip.remove(), 300); }
     document.getElementById('lvl-window').classList.add('lvl-open');
     const launcher = document.getElementById('lvl-launcher');
     launcher.classList.add('lvl-open');
@@ -292,6 +342,21 @@
     messages = loadHistory();
     if (messages.length === 0) { messages = [{ role:'bot', text:GREETING, ts:Date.now() }]; saveHistory(messages); }
     messages.forEach(m => appendMessage(m.role, m.text, m.ts));
+
+    // Show welcome tooltip after 4 seconds (only on first visit, not mobile)
+    if (!sessionStorage.getItem('lvl_tooltip_seen') && window.innerWidth > 480) {
+      setTimeout(() => {
+        if (isOpen) return;
+        const tip = document.createElement('div');
+        tip.id = 'lvl-tooltip';
+        tip.innerHTML = 'Have a question about our AI receptionist? Chat with us! <button id="lvl-tooltip-close">\u2715</button>';
+        document.body.appendChild(tip);
+        requestAnimationFrame(() => requestAnimationFrame(() => tip.classList.add('lvl-show')));
+        const dismiss = () => { tip.classList.remove('lvl-show'); sessionStorage.setItem('lvl_tooltip_seen', '1'); setTimeout(() => tip.remove(), 300); };
+        document.getElementById('lvl-tooltip-close').addEventListener('click', dismiss);
+        setTimeout(dismiss, 8000);
+      }, 4000);
+    }
   }
 
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
