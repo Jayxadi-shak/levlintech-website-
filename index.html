@@ -1452,6 +1452,18 @@
     });
   }
 
+  // ── Clean URLs — scroll without hash ──
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        history.replaceState(null, '', window.location.pathname);
+      }
+    });
+  });
+
   // ── Feature card spotlight ──
   document.querySelectorAll('.feat-cell').forEach(cell => {
     cell.addEventListener('mousemove', e => {
