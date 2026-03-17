@@ -58,56 +58,6 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
-  /* ─── PRO ANIMATIONS ───────────────────────────────────────── */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-  }
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-  @keyframes gradient-rotate {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  @keyframes glow-pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
-  }
-  @keyframes slide-up {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes scale-in {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    @keyframes float { 0%, 100% { transform: none; } }
-    @keyframes shimmer { 0%, 100% { background-position: 0; } }
-    @keyframes gradient-rotate { 0%, 100% { background-position: 0% 50%; } }
-    @keyframes glow-pulse { 0%, 100% { opacity: 0.4; } }
-    @keyframes slide-up { from, to { opacity: 1; transform: none; } }
-    @keyframes scale-in { from, to { opacity: 1; transform: none; } }
-  }
-
-  /* ─── PRO SECTION DIVIDERS ─────────────────────────────────── */
-  .section-glow {
-    position: relative;
-  }
-  .section-glow::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--violet2), transparent);
-    opacity: 0.4;
-  }
-
   /* ─── UTILITIES ─────────────────────────────────────────────── */
   .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
   section { padding: 120px 0; }
@@ -132,31 +82,17 @@
     cursor: pointer; border: none;
     font-family: 'Space Grotesk', sans-serif;
     letter-spacing: .01em;
-    transition: all .22s cubic-bezier(.4,0,.2,1);
+    transition: all .16s cubic-bezier(.4,0,.2,1);
     white-space: nowrap;
   }
   .btn-primary {
     background: #fff;
     color: #000;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-primary::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(16,185,129,0.15), transparent);
-    background-size: 200% 100%;
-    animation: shimmer 3s ease-in-out infinite;
-    pointer-events: none;
   }
   .btn-primary:hover {
     background: rgba(255,255,255,.88);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(255,255,255,.15), 0 0 40px rgba(16,185,129,.1);
-  }
-  .btn-primary:active {
-    transform: translateY(0);
-    transition-duration: .08s;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(255,255,255,.12);
   }
   .btn-ghost {
     background: var(--glass);
@@ -173,24 +109,10 @@
     background: linear-gradient(135deg, var(--violet2), var(--violet));
     color: #fff;
     box-shadow: 0 4px 20px rgba(5,150,105,.35);
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-violet::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-    background-size: 200% 100%;
-    animation: shimmer 2.5s ease-in-out infinite;
-    pointer-events: none;
   }
   .btn-violet:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 36px rgba(5,150,105,.5), 0 0 60px rgba(16,185,129,.15);
-  }
-  .btn-violet:active {
-    transform: translateY(0);
-    transition-duration: .08s;
+    box-shadow: 0 10px 36px rgba(5,150,105,.5);
   }
 
   .sh { text-align: center; margin-bottom: 80px; }
@@ -222,7 +144,7 @@
     border: 1px solid var(--border);
     border-radius: 20px;
     backdrop-filter: blur(20px);
-    transition: border-color .25s, transform .25s, box-shadow .25s;
+    transition: border-color .18s, transform .18s, box-shadow .18s;
   }
   .card:hover {
     border-color: var(--border2);
@@ -244,14 +166,8 @@
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 900;
     border-bottom: 1px solid var(--border);
-    background: rgba(0,0,0,.65);
+    background: rgba(0,0,0,.75);
     backdrop-filter: blur(20px) saturate(1.5);
-    transition: background .3s, border-color .3s, box-shadow .3s;
-  }
-  nav.scrolled {
-    background: rgba(0,0,0,.92);
-    border-bottom-color: var(--border2);
-    box-shadow: 0 4px 30px rgba(0,0,0,.5);
   }
   .nav-wrap {
     max-width: var(--max); margin: 0 auto; padding: 0 24px;
@@ -295,21 +211,18 @@
     width: 700px; height: 700px;
     top: -200px; left: -100px;
     background: radial-gradient(circle, #0d9488, transparent 70%);
-    animation: float 12s ease-in-out infinite;
   }
   .mesh-blob.b {
     width: 600px; height: 600px;
     top: -100px; right: -150px;
     background: radial-gradient(circle, #059669, transparent 70%);
     opacity: .25;
-    animation: float 16s ease-in-out infinite reverse;
   }
   .mesh-blob.c {
     width: 400px; height: 400px;
     bottom: -100px; left: 30%;
     background: radial-gradient(circle, #34d399, transparent 70%);
     opacity: .12;
-    animation: float 20s ease-in-out infinite 2s;
   }
 
   /* dot grid */
@@ -321,10 +234,7 @@
     -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
   }
 
-  #hero .container {
-    position: relative; z-index: 1; text-align: center;
-    animation: slide-up 0.8s ease-out;
-  }
+  #hero .container { position: relative; z-index: 1; text-align: center; }
 
   .hero-live-badge {
     display: inline-flex; align-items: center; gap: 8px;
@@ -391,16 +301,10 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 40px; font-weight: 700;
     letter-spacing: -.04em;
-    background: linear-gradient(135deg, #fff 30%, var(--violet2) 100%);
+    background: linear-gradient(135deg, #fff, rgba(255,255,255,.7));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
     line-height: 1; margin-bottom: 8px;
-  }
-  .metric {
-    transition: background .25s;
-  }
-  .metric:hover {
-    background: rgba(16,185,129,0.03);
   }
   .metric-label { font-size: 12px; color: var(--text3); letter-spacing: .06em; text-transform: uppercase; }
 
@@ -449,14 +353,6 @@
   .tl-item:hover {
     border-color: var(--border2);
     box-shadow: 0 8px 40px rgba(0,0,0,.5);
-    transform: translateX(4px);
-  }
-  .tl-item .tl-num {
-    transition: background .25s, color .25s;
-  }
-  .tl-item:hover .tl-num {
-    background: rgba(16,185,129,0.08);
-    color: var(--violet2);
   }
   .tl-num {
     background: var(--glass2);
@@ -506,7 +402,7 @@
     content: '';
     position: absolute; inset: 0;
     background: radial-gradient(circle 160px at var(--mx, 50%) var(--my, 50%), rgba(5,150,105,.07), transparent 70%);
-    opacity: 0; transition: opacity .3s;
+    opacity: 0; transition: opacity .18s;
   }
   .feat-cell:hover::after { opacity: 1; }
 
@@ -523,13 +419,6 @@
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     font-size: 20px; margin-bottom: 20px;
-    transition: all .3s ease;
-  }
-  .feat-cell:hover .feat-icon-wrap {
-    background: rgba(16,185,129,0.1);
-    border-color: rgba(16,185,129,0.3);
-    box-shadow: 0 0 20px rgba(16,185,129,0.15);
-    transform: scale(1.05);
   }
   .feat-cell h3 {
     font-size: 16px; font-weight: 600;
@@ -594,23 +483,21 @@
     backdrop-filter: blur(20px);
     transition: all .25s;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 40px rgba(5,150,105,.06);
   }
   .price-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 24px 60px rgba(0,0,0,.5);
+    box-shadow: 0 0 60px rgba(5,150,105,.12), 0 24px 60px rgba(0,0,0,.5);
+    border-color: var(--border2);
   }
   /* animated gradient border on featured */
   .price-card.featured {
     background: linear-gradient(var(--bg1), var(--bg1)) padding-box,
                 linear-gradient(135deg, var(--violet2), var(--indigo), var(--cyan), var(--violet2)) border-box;
-    border: 2px solid transparent;
-    box-shadow: 0 0 60px rgba(5,150,105,.15), 0 24px 60px rgba(0,0,0,.5);
-    background-size: 100% 100%, 300% 300%;
-    animation: gradient-rotate 6s ease infinite;
-  }
-  .price-card.featured:hover {
-    box-shadow: 0 0 80px rgba(5,150,105,.25), 0 32px 80px rgba(0,0,0,.6);
-    transform: translateY(-6px) scale(1.01);
+    border: 1px solid transparent;
+    box-shadow: 0 0 80px rgba(5,150,105,.2), 0 24px 60px rgba(0,0,0,.5);
   }
   .feat-label {
     position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
@@ -645,7 +532,7 @@
     margin-bottom: 28px; padding-bottom: 24px;
     border-bottom: 1px solid var(--border);
   }
-  .price-list { list-style: none; margin-bottom: 32px; }
+  .price-list { list-style: none; margin-bottom: 32px; flex: 1; }
   .price-list li {
     font-size: 13px; color: var(--text2);
     padding: 9px 0; border-bottom: 1px solid var(--border);
@@ -653,7 +540,7 @@
   }
   .price-list li:last-child { border-bottom: none; }
   .price-list .ck { color: var(--violet2); font-size: 11px; }
-  .price-card .btn { width: 100%; justify-content: center; }
+  .price-card .btn { width: 100%; justify-content: center; margin-top: auto; }
 
   /* ─── DEMO ──────────────────────────────────────────────────── */
   #demo { background: var(--bg1); }
@@ -697,17 +584,7 @@
     box-shadow:
       0 0 0 1px rgba(255,255,255,.04),
       0 32px 80px rgba(0,0,0,.7),
-      0 0 80px rgba(16,185,129,.08),
       inset 0 1px 0 rgba(255,255,255,.06);
-    transition: transform .4s ease, box-shadow .4s ease;
-  }
-  .phone:hover {
-    transform: translateY(-8px);
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,.06),
-      0 40px 100px rgba(0,0,0,.8),
-      0 0 120px rgba(16,185,129,.12),
-      inset 0 1px 0 rgba(255,255,255,.08);
   }
   .phone-notch {
     width: 100px; height: 28px; background: var(--bg);
@@ -955,19 +832,19 @@
   /* ─── SCROLL REVEAL ─────────────────────────────────────────── */
   .reveal {
     opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(20px);
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .reveal.visible {
     opacity: 1;
     transform: translateY(0);
   }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-  .reveal-delay-4 { transition-delay: 0.35s; }
-  .reveal-delay-5 { transition-delay: 0.4s; }
-  .reveal-delay-6 { transition-delay: 0.45s; }
+  .reveal-delay-1 { transition-delay: 0.05s; }
+  .reveal-delay-2 { transition-delay: 0.1s; }
+  .reveal-delay-3 { transition-delay: 0.15s; }
+  .reveal-delay-4 { transition-delay: 0.2s; }
+  .reveal-delay-5 { transition-delay: 0.25s; }
+  .reveal-delay-6 { transition-delay: 0.3s; }
 
   /* ─── HAMBURGER MENU ────────────────────────────────────────── */
   .nav-hamburger {
@@ -980,7 +857,7 @@
   .nav-hamburger span {
     display: block; width: 20px; height: 2px;
     background: var(--text2); border-radius: 2px;
-    transition: transform 0.25s, opacity 0.25s;
+    transition: transform 0.18s, opacity 0.18s;
   }
   .nav-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav-hamburger.active span:nth-child(2) { opacity: 0; }
@@ -1041,7 +918,7 @@
   .form-field.error .form-error { display: block; }
 
   /* ─── PHONE MOCKUP ANIMATION ───────────────────────────────── */
-  .pm { opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+  .pm { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
   .pm.pm-visible { opacity: 1; transform: translateY(0); }
 
   /* ─── FLOATING PARTICLES ────────────────────────────────────── */
@@ -1082,7 +959,7 @@
     <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <a href="#contact" class="btn btn-ghost" style="padding:9px 20px;font-size:13px;">Book a Demo</a>
+    <a href="#contact" class="btn btn-ghost" style="padding:9px 20px;font-size:13px;">Start Free Trial</a>
   </div>
 </nav>
 
@@ -1115,8 +992,8 @@
     </p>
 
     <div class="hero-cta">
-      <a href="#contact" class="btn btn-primary">Book a Free Demo &rarr;</a>
-      <a href="#demo" class="btn btn-ghost">See It Live</a>
+      <a href="#contact" class="btn btn-primary">Start Free Trial &rarr;</a>
+      <a href="#pricing" class="btn btn-ghost">View Pricing</a>
     </div>
 
     <div class="metric-strip reveal">
@@ -1133,8 +1010,8 @@
         <div class="metric-label">Leads Captured</div>
       </div>
       <div class="metric">
-        <div class="metric-val">48hr</div>
-        <div class="metric-label">Setup Time</div>
+        <div class="metric-val">Free</div>
+        <div class="metric-label">7-Day Trial</div>
       </div>
     </div>
   </div>
@@ -1154,7 +1031,7 @@
 </section>
 
 <!-- HOW IT WORKS -->
-<section id="how-it-works" class="section-glow">
+<section id="how-it-works">
   <div class="container">
     <div class="sh reveal">
       <span class="tag"><span class="dot"></span>How It Works</span>
@@ -1199,7 +1076,7 @@
 </section>
 
 <!-- FEATURES -->
-<section id="features" class="section-glow">
+<section id="features">
   <div class="container">
     <div class="sh reveal">
       <span class="tag"><span class="dot"></span>Features</span>
@@ -1250,8 +1127,8 @@
 <section id="proof">
   <div class="container">
     <div class="sh" style="margin-bottom:48px;">
-      <h2>Now onboarding our first<br><span class="v-text">local partners.</span></h2>
-      <p>Limited spots at launch pricing — 30-day money-back guarantee on every plan.</p>
+      <h2>Trusted by local businesses<br><span class="v-text">across the US.</span></h2>
+      <p>Every plan includes a 7-day free trial. No credit card required.</p>
     </div>
     <div class="proof-grid">
       <div class="proof-card reveal reveal-delay-1" style="display:flex;align-items:center;justify-content:center;">
@@ -1269,74 +1146,113 @@
 </section>
 
 <!-- PRICING -->
-<section id="pricing" class="section-glow">
+<section id="pricing">
   <div class="container">
     <div class="sh reveal">
       <span class="tag"><span class="dot"></span>Pricing</span>
       <h2>Simple pricing.<br><span class="g-text">Pays for itself with one lead.</span></h2>
-      <p>No contracts. Cancel anytime. 30-day money-back guarantee on every plan.</p>
+      <p>No contracts. No setup fees. Cancel anytime. 7-day free trial on every plan.</p>
       <div style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);color:var(--violet2);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:7px 18px;border-radius:100px;font-family:'Space Grotesk',sans-serif;">
-        30-Day Money-Back Guarantee
+        7-Day Free Trial — No Credit Card
+      </div>
+      <!-- Billing toggle -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:24px;">
+        <span id="toggle-monthly-label" style="font-size:14px;font-weight:600;color:var(--text);transition:color .3s;">Monthly</span>
+        <label style="position:relative;display:inline-block;width:48px;height:26px;cursor:pointer;">
+          <input type="checkbox" id="billing-toggle" style="opacity:0;width:0;height:0;">
+          <span style="position:absolute;inset:0;background:var(--glass3);border-radius:26px;transition:background .3s;"></span>
+          <span id="toggle-knob" style="position:absolute;top:3px;left:3px;width:20px;height:20px;background:var(--violet2);border-radius:50%;transition:transform .3s;"></span>
+        </label>
+        <span id="toggle-annual-label" style="font-size:14px;font-weight:500;color:var(--text3);transition:color .3s;">Annual <span style="color:var(--violet2);font-size:12px;font-weight:600;">Save 20%</span></span>
       </div>
     </div>
     <div class="price-grid">
       <div class="price-card reveal reveal-delay-1">
         <div class="price-tier">Starter</div>
         <div class="price-name">Starter</div>
-        <div class="price-amount"><strong>$299</strong><span>/mo</span></div>
-        <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">+ $999 one-time setup</div>
-        <div class="price-desc">For businesses ready to stop missing calls and leads.</div>
+        <div class="price-amount"><strong class="price-val" data-monthly="$97" data-annual="$77">$97</strong><span>/mo</span></div>
+        <div class="annual-note" style="font-size:12px;color:var(--text3);margin-bottom:16px;display:none;">Billed $924/year</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:16px;">100 calls included &middot; $1.25/additional</div>
+        <div class="price-desc">For businesses ready to stop missing calls.</div>
         <ul class="price-list">
-          <li><span class="ck">✦</span> AI Phone Receptionist</li>
-          <li><span class="ck">✦</span> AI Website Chat Widget</li>
-          <li><span class="ck">✦</span> 300 voice minutes included</li>
-          <li><span class="ck">✦</span> Lead capture — name, email, phone</li>
-          <li><span class="ck">✦</span> Email notifications</li>
+          <li><span class="ck">✦</span> 24/7 AI Phone Receptionist</li>
+          <li><span class="ck">✦</span> AI Website Chat</li>
+          <li><span class="ck">✦</span> Call summaries</li>
+          <li><span class="ck">✦</span> Call recordings &amp; transcripts</li>
+          <li><span class="ck">✦</span> Email alerts (instant)</li>
+          <li><span class="ck">✦</span> Spam blocking</li>
           <li><span class="ck">✦</span> Lead dashboard</li>
-          <li><span class="ck">✦</span> Trained on your business</li>
-          <li><span class="ck">✦</span> 30-day money-back guarantee</li>
+          <li><span class="ck">✦</span> Basic AI training</li>
+          <li><span class="ck">✦</span> 7-day free trial</li>
         </ul>
-        <a href="#contact" class="btn btn-ghost">Get Started</a>
+        <a href="#contact" class="btn btn-ghost">Start Free Trial</a>
       </div>
 
       <div class="price-card featured reveal reveal-delay-2">
         <div class="feat-label">Most Popular</div>
-        <div class="price-tier">Growth</div>
-        <div class="price-name">Growth</div>
-        <div class="price-amount"><strong>$499</strong><span>/mo</span></div>
-        <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">+ $2,500 one-time setup</div>
+        <div class="price-tier">Pro</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount"><strong class="price-val" data-monthly="$197" data-annual="$157">$197</strong><span>/mo</span></div>
+        <div class="annual-note" style="font-size:12px;color:var(--text3);margin-bottom:16px;display:none;">Billed $1,884/year</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:16px;">300 calls included &middot; $0.75/additional</div>
         <div class="price-desc">Full coverage. Never miss a lead again.</div>
         <ul class="price-list">
           <li><span class="ck">✦</span> Everything in Starter</li>
-          <li><span class="ck">✦</span> Unlimited voice minutes</li>
-          <li><span class="ck">✦</span> SMS + Email notifications</li>
-          <li><span class="ck">✦</span> CRM integration</li>
-          <li><span class="ck">✦</span> Custom AI voice and personality</li>
-          <li><span class="ck">✦</span> Monthly performance report</li>
-          <li><span class="ck">✦</span> Priority support</li>
+          <li><span class="ck">✦</span> Call transfers to your phone</li>
+          <li><span class="ck">✦</span> Appointment booking</li>
+          <li><span class="ck">✦</span> SMS + Email alerts</li>
+          <li><span class="ck">✦</span> Full custom AI training</li>
+          <li><span class="ck">✦</span> Zapier CRM integration</li>
+          <li><span class="ck">✦</span> 7-day free trial</li>
         </ul>
-        <a href="#contact" class="btn btn-violet">Get Started</a>
+        <a href="#contact" class="btn btn-violet">Start Free Trial</a>
       </div>
 
       <div class="price-card reveal reveal-delay-3">
-        <div class="price-tier">Premium</div>
-        <div class="price-name">Premium</div>
-        <div class="price-amount"><strong>$999</strong><span>/mo</span></div>
-        <div style="font-size:12px;color:var(--text3);margin-bottom:16px;">+ $5,000 one-time setup</div>
+        <div class="price-tier">Business</div>
+        <div class="price-name">Business</div>
+        <div class="price-amount"><strong class="price-val" data-monthly="$397" data-annual="$327">$397</strong><span>/mo</span></div>
+        <div class="annual-note" style="font-size:12px;color:var(--text3);margin-bottom:16px;display:none;">Billed $3,924/year</div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:16px;">600 calls included &middot; $0.50/additional</div>
         <div class="price-desc">For multi-location businesses and agencies.</div>
         <ul class="price-list">
-          <li><span class="ck">✦</span> Everything in Growth</li>
-          <li><span class="ck">✦</span> Multiple locations and phone numbers</li>
-          <li><span class="ck">✦</span> Advanced integrations</li>
-          <li><span class="ck">✦</span> White-label option</li>
+          <li><span class="ck">✦</span> Everything in Pro</li>
+          <li><span class="ck">✦</span> Custom AI voice</li>
+          <li><span class="ck">✦</span> Multi-location support</li>
+          <li><span class="ck">✦</span> Native + Zapier CRM integration</li>
+          <li><span class="ck">✦</span> Priority support</li>
           <li><span class="ck">✦</span> Dedicated onboarding</li>
-          <li><span class="ck">✦</span> Quarterly strategy calls</li>
-          <li><span class="ck">✦</span> Custom workflows</li>
+          <li><span class="ck">✦</span> 7-day free trial</li>
         </ul>
-        <a href="#contact" class="btn btn-ghost">Contact Us</a>
+        <a href="#contact" class="btn btn-ghost">Start Free Trial</a>
       </div>
     </div>
-    <p style="text-align:center;font-size:13px;color:var(--text3);margin-top:40px;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.75;">Every plan includes a 30-day money-back guarantee. If your AI doesn't capture at least 5 leads in the first month, you get a full refund.</p>
+    <p style="text-align:center;font-size:13px;color:var(--text3);margin-top:40px;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.75;">Every plan includes a 7-day free trial. No credit card required. Forward your calls and watch leads come in.</p>
+
+    <!-- FAQ -->
+    <div style="max-width:680px;margin:60px auto 0;text-align:left;">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;text-align:center;margin-bottom:32px;">Frequently asked questions</h3>
+      <details style="border-bottom:1px solid var(--border);padding:20px 0;cursor:pointer;">
+        <summary style="font-size:15px;font-weight:500;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;">What happens when I hit my call limit?<span style="color:var(--text3);font-size:18px;margin-left:12px;">+</span></summary>
+        <p style="font-size:14px;color:var(--text2);margin-top:12px;line-height:1.7;">You'll be charged per additional call at your plan's rate ($1.25, $0.75, or $0.50 per call). Or upgrade to the next plan anytime — takes effect immediately. We notify you at 80% of your limit so there are no surprises.</p>
+      </details>
+      <details style="border-bottom:1px solid var(--border);padding:20px 0;cursor:pointer;">
+        <summary style="font-size:15px;font-weight:500;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;">Is there really no setup fee?<span style="color:var(--text3);font-size:18px;margin-left:12px;">+</span></summary>
+        <p style="font-size:14px;color:var(--text2);margin-top:12px;line-height:1.7;">None. Zero. Sign up, answer a few questions about your business, and your AI receptionist is live in under 10 minutes.</p>
+      </details>
+      <details style="border-bottom:1px solid var(--border);padding:20px 0;cursor:pointer;">
+        <summary style="font-size:15px;font-weight:500;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;">What happens after the free trial?<span style="color:var(--text3);font-size:18px;margin-left:12px;">+</span></summary>
+        <p style="font-size:14px;color:var(--text2);margin-top:12px;line-height:1.7;">After 7 days, you choose a plan and enter payment. If you do nothing, the trial simply ends — no charge, no commitment. Your call data and settings are saved for 30 days in case you come back.</p>
+      </details>
+      <details style="border-bottom:1px solid var(--border);padding:20px 0;cursor:pointer;">
+        <summary style="font-size:15px;font-weight:500;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;">Can I change plans later?<span style="color:var(--text3);font-size:18px;margin-left:12px;">+</span></summary>
+        <p style="font-size:14px;color:var(--text2);margin-top:12px;line-height:1.7;">Yes. Upgrade or downgrade anytime from your dashboard. Changes take effect immediately. If you upgrade mid-cycle, we prorate the difference.</p>
+      </details>
+      <details style="border-bottom:1px solid var(--border);padding:20px 0;cursor:pointer;">
+        <summary style="font-size:15px;font-weight:500;color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;">Do spam calls count toward my limit?<span style="color:var(--text3);font-size:18px;margin-left:12px;">+</span></summary>
+        <p style="font-size:14px;color:var(--text2);margin-top:12px;line-height:1.7;">No. Our AI filters spam automatically. Only real conversations with real people count toward your call limit.</p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -1410,10 +1326,10 @@
   </div>
   <div class="container">
     <div class="cta-inner reveal">
-      <h2>Stop losing money to<br><em style="font-style:normal;background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">missed calls.</em></h2>
-      <p>Every unanswered call is revenue walking to your competitor. Levlin makes sure that never happens — starting this week.</p>
+      <h2>Your competitor is answering their phone right now.<br><em style="font-style:normal;background:linear-gradient(135deg,var(--violet2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Are you?</em></h2>
+      <p>Start your free trial in 5 minutes. No credit card. No setup fee. Just forward your calls and watch leads roll in.</p>
       <div class="cta-btns">
-        <a href="#contact" class="btn btn-primary">Book a Free Demo &rarr;</a>
+        <a href="#contact" class="btn btn-primary">Start Free Trial &rarr;</a>
         <a href="#pricing" class="btn btn-ghost">View Pricing</a>
       </div>
     </div>
@@ -1425,13 +1341,13 @@
   <div class="container">
     <div class="contact-wrap">
       <div class="contact-left reveal">
-        <span class="tag" style="margin-bottom:24px;display:inline-flex;"><span class="dot"></span>Book a Demo</span>
-        <h2>Book your<br>free demo.</h2>
-        <p>A 20-minute call where we show you exactly how Levlin works for your type of business. No pressure. No sales pitch.</p>
+        <span class="tag" style="margin-bottom:24px;display:inline-flex;"><span class="dot"></span>Start Free Trial</span>
+        <h2>Start your<br>free trial.</h2>
+        <p>Takes 5 minutes. No credit card. No sales call. Just sign up, tell us about your business, and start receiving calls.</p>
         <ul class="contact-perks">
-          <li><span class="perk-dot"></span>Live walkthrough customized for your industry</li>
-          <li><span class="perk-dot"></span>See a demo built with your actual business info</li>
-          <li><span class="perk-dot"></span>Full setup included — we handle everything</li>
+          <li><span class="perk-dot"></span>AI receptionist live in under 10 minutes</li>
+          <li><span class="perk-dot"></span>Trained on your business, services, and pricing</li>
+          <li><span class="perk-dot"></span>No setup fee — ever</li>
           <li><span class="perk-dot"></span>No contracts — cancel anytime</li>
         </ul>
       </div>
@@ -1471,7 +1387,7 @@
             </select>
             <span class="form-error" role="alert">Please select your industry</span>
           </div>
-          <button type="submit" class="btn btn-violet">Reserve My Demo Spot &rarr;</button>
+          <button type="submit" class="btn btn-violet">Start My Free Trial &rarr;</button>
         </form>
       </div>
     </div>
@@ -1500,18 +1416,42 @@
           <ul>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href="#contact">Book a Demo</a></li>
+            <li><a href="#contact">Start Free Trial</a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="foot-copy">© 2026 Levlin Tech. All rights reserved.</span>
+      <span class="foot-copy">© 2026 Levlin Tech. All rights reserved. Serving businesses across all 50 states.</span>
     </div>
   </div>
 </footer>
 
 <script>
+  // ── Billing toggle (Monthly/Annual) ──
+  const billingToggle = document.getElementById('billing-toggle');
+  if (billingToggle) {
+    billingToggle.addEventListener('change', () => {
+      const isAnnual = billingToggle.checked;
+      const knob = document.getElementById('toggle-knob');
+      const monthlyLabel = document.getElementById('toggle-monthly-label');
+      const annualLabel = document.getElementById('toggle-annual-label');
+
+      knob.style.transform = isAnnual ? 'translateX(22px)' : 'translateX(0)';
+      monthlyLabel.style.color = isAnnual ? 'var(--text3)' : 'var(--text)';
+      monthlyLabel.style.fontWeight = isAnnual ? '500' : '600';
+      annualLabel.style.color = isAnnual ? 'var(--text)' : 'var(--text3)';
+      annualLabel.style.fontWeight = isAnnual ? '600' : '500';
+
+      document.querySelectorAll('.price-val').forEach(el => {
+        el.textContent = isAnnual ? el.dataset.annual : el.dataset.monthly;
+      });
+      document.querySelectorAll('.annual-note').forEach(el => {
+        el.style.display = isAnnual ? 'block' : 'none';
+      });
+    });
+  }
+
   // ── Feature card spotlight ──
   document.querySelectorAll('.feat-cell').forEach(cell => {
     cell.addEventListener('mousemove', e => {
@@ -1530,7 +1470,7 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
@@ -1560,9 +1500,9 @@
           vals.forEach(v => {
             const text = v.textContent.trim();
             if (text === '24/7') return; // skip — not a number
-            if (text === '<2s') { countUp(v, 2, 's', 800, '<'); }
-            else if (text === '100%') countUp(v, 100, '%', 1200);
-            else if (text === '48hr') countUp(v, 48, 'hr', 1000);
+            if (text === '<2s') { countUp(v, 2, 's', 500, '<'); }
+            else if (text === '100%') countUp(v, 100, '%', 800);
+            else if (text === '48hr') countUp(v, 48, 'hr', 650);
           });
           metricObserver.unobserve(entry.target);
         }
@@ -1580,7 +1520,7 @@
           const msgs = entry.target.querySelectorAll('.pm');
           msgs.forEach((m, i) => {
             if (reducedMotion) m.classList.add('pm-visible');
-            else setTimeout(() => m.classList.add('pm-visible'), i * 500);
+            else setTimeout(() => m.classList.add('pm-visible'), i * 300);
           });
           phoneObserver.unobserve(entry.target);
         }
@@ -1588,14 +1528,6 @@
     }, { threshold: 0.3 });
     const phoneMsgs = document.querySelector('.phone-msgs');
     if (phoneMsgs) phoneObserver.observe(phoneMsgs);
-  }
-
-  // ── Nav Scroll Effect ──
-  const navEl = document.querySelector('nav');
-  if (navEl) {
-    window.addEventListener('scroll', () => {
-      navEl.classList.toggle('scrolled', window.scrollY > 60);
-    }, { passive: true });
   }
 
   // ── Hamburger Menu ──
@@ -1685,22 +1617,15 @@
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const form = document.getElementById('contact-form');
-      while (form.firstChild) form.removeChild(form.firstChild);
-      const wrapper = document.createElement('div');
-      wrapper.style.cssText = 'text-align:center;padding:40px 20px;';
-      const checkDiv = document.createElement('div');
-      checkDiv.className = 'success-check';
-      checkDiv.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-      const h3 = document.createElement('h3');
-      h3.style.cssText = "font-family:'Space Grotesk',sans-serif;font-size:22px;color:#fff;margin-bottom:10px;";
-      h3.textContent = "You're on the list!";
-      const p = document.createElement('p');
-      p.style.cssText = 'color:rgba(255,255,255,0.55);font-size:15px;line-height:1.6;';
-      p.textContent = "We'll reach out within 24 hours to schedule your free 20-minute demo. Check your email for a confirmation.";
-      wrapper.appendChild(checkDiv);
-      wrapper.appendChild(h3);
-      wrapper.appendChild(p);
-      form.appendChild(wrapper);
+      form.innerHTML = `
+        <div style="text-align:center;padding:40px 20px;">
+          <div class="success-check">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;color:#fff;margin-bottom:10px;">You're on the list!</h3>
+          <p style="color:rgba(255,255,255,0.55);font-size:15px;line-height:1.6;">We'll reach out within 24 hours to schedule your free 20-minute demo.<br>Check your email for a confirmation.</p>
+        </div>
+      `;
     } catch(err) {
       console.error('Lead form submission failed:', err);
       b.classList.remove('btn-loading');
