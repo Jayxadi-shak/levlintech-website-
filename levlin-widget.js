@@ -49,8 +49,9 @@
     #lvl-window.lvl-open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
 
     #lvl-header { background: linear-gradient(135deg, rgba(5,150,105,0.3) 0%, rgba(13,148,136,0.2) 100%); border-bottom: 1px solid rgba(16, 185, 129, 0.15); padding: 16px 20px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; position: relative; overflow: hidden; background-size: 200% 200%; animation: lvl-header-glow 8s ease infinite; }
-    #lvl-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 0 16px rgba(16,185,129,0.4); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    #lvl-avatar svg { width: 22px; height: 22px; fill: #fff; }
+    #lvl-avatar { width: 40px; height: 40px; border-radius: 50%; background: #0a0a0a; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 0 16px rgba(16,185,129,0.2); flex-shrink: 0; overflow: hidden; }
+    #lvl-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    #lvl-avatar svg { display: none; }
     #lvl-header-text { flex: 1; }
     #lvl-header-name { color: #fff; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
     #lvl-header-status { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 3px; display: flex; align-items: center; gap: 5px; font-weight: 400; }
@@ -179,7 +180,7 @@
     win.id = 'lvl-window'; win.setAttribute('role', 'dialog'); win.setAttribute('aria-modal', 'true'); win.setAttribute('aria-labelledby', 'lvl-header-name');
     win.innerHTML = `
       <div id="lvl-header">
-        <div id="lvl-avatar">${botIcon}</div>
+        <div id="lvl-avatar"><img src="favicon.png" alt="Levlin AI"></div>
         <div id="lvl-header-text">
           <div id="lvl-header-name">Levlin AI Assistant</div>
           <div id="lvl-header-status"><div id="lvl-status-dot"></div>Online \u00B7 replies instantly</div>

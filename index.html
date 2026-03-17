@@ -610,9 +610,10 @@
   }
   .phone-ava {
     width: 32px; height: 32px;
-    background: linear-gradient(135deg, var(--violet2), var(--indigo));
+    background: var(--bg2);
+    border: 1px solid var(--border2);
     border-radius: 50%; display: flex; align-items: center;
-    justify-content: center; font-size: 12px; font-weight: 700;
+    justify-content: center; font-size: 12px; font-weight: 700; overflow: hidden;
     flex-shrink: 0;
   }
   .phone-bar-text strong { display: block; font-size: 12px; }
@@ -949,7 +950,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-wrap">
-    <span class="nav-logo">Levlin <span>Tech</span></span>
+    <span class="nav-logo"><img src="favicon.png" alt="Levlin Tech" style="height:32px;width:32px;border-radius:8px;vertical-align:middle;margin-right:8px;">Levlin <span>Tech</span></span>
     <div class="nav-links">
       <a href="#how-it-works">How it Works</a>
       <a href="#features">Features</a>
@@ -1294,7 +1295,7 @@
           </div>
           <div class="phone-screen">
             <div class="phone-bar">
-              <div class="phone-ava">L</div>
+              <div class="phone-ava"><img src="favicon.png" alt="Levlin AI" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"></div>
               <div class="phone-bar-text">
                 <strong>Levlin AI</strong>
                 <small>● Online now</small>
@@ -1399,7 +1400,7 @@
   <div class="container">
     <div class="foot-top">
       <div class="foot-brand">
-        <div class="logo">Levlin <span>Tech</span></div>
+        <div class="logo"><img src="favicon.png" alt="Levlin Tech" style="height:28px;width:28px;border-radius:6px;vertical-align:middle;margin-right:8px;">Levlin <span>Tech</span></div>
         <p>AI-powered front desk for local businesses. Chat, voice, and lead capture in one platform.</p>
       </div>
       <div class="foot-nav">
